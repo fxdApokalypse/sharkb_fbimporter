@@ -5,7 +5,7 @@ import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.knowledgeBase.inmemory.*;
 
 public class ContextUtil {
-	private KnowledgeGoddess kg;
+	private ShopEngine kg;
 	private ContextCoordinates cc;
 	private ContextPoint kbcp;
 	private Information kbInfo;

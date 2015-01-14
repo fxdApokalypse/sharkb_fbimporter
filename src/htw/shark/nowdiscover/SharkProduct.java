@@ -1,16 +1,17 @@
 package htw.shark.nowdiscover;
 
+import htw.shark.nowdiscover.userutils.*;
+
 import java.util.*;
 
 import net.sharkfw.knowledgeBase.*;
-import net.sharkfw.knowledgeBase.inmemory.*;
 
 /**
  * 
  *
  */
 public class SharkProduct implements Product {
-	SharkKB kb = new InMemoSharkKB();
+	SharkKB kb = ShopEngine.getKB();
 	SemanticNet sn;
 	private SNSemanticTag productTag;
 

@@ -5,29 +5,54 @@
  */
 package htw.shark.nowdiscover.userutils;
 
+import htw.shark.nowdiscover.*;
 import net.sharkfw.knowledgeBase.inmemory.*;
 
 /**
  *
  * @author Jörn
  */
-public class KnowledgeGoddess {
+public class ShopEngine implements Shop {
 	// TODO eventuell listen von objekten
-	private static KnowledgeGoddess instance = null;
+	private static ShopEngine instance = null;
 	private static InMemoSharkKB kb;
 
-	private KnowledgeGoddess() {
+	private ShopEngine() {
 	}
 
-	public static void initInstance() {
+	public static Shop getShopEngine() {
 		if (instance == null) {
-			instance = new KnowledgeGoddess();
+			instance = new ShopEngine();
 		}
-
+		return instance;
 	}
 
 	public static InMemoSharkKB getKB() {
 		return kb;
+	}
+
+	@Override
+	public Category createCategory(String name, String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Category createCategory(String name, String... url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product createProduct(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User createUser(String name, String url) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// public void storeKnowledge(ShopConcept thing) {

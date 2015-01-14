@@ -1,7 +1,7 @@
 package htw.shark.nowdiscover;
 
+import htw.shark.nowdiscover.userutils.*;
 import net.sharkfw.knowledgeBase.*;
-import net.sharkfw.knowledgeBase.inmemory.*;
 
 /**
  * 
@@ -12,7 +12,7 @@ public class SharkCategory implements Category {
 
 	}
 
-	SharkKB kb = new InMemoSharkKB();
+	SharkKB kb = ShopEngine.getKB();
 	SemanticNet sn = kb.getTopicsAsSemanticNet();
 	private SNSemanticTag category;
 

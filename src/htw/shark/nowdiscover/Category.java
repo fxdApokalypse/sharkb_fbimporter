@@ -8,7 +8,7 @@ import net.sharkfw.knowledgeBase.*;
  */
 public interface Category extends ShopConcept {
 
-	void setCategory(String name, String... urls);
+	void setName(String name);
 
 	void addUrls(String urls[]) throws SharkKBException;
 
