@@ -6,7 +6,9 @@
 package htw.shark.nowdiscover.userutils;
 
 import htw.shark.nowdiscover.*;
+import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.knowledgeBase.inmemory.*;
+import net.sharkfw.system.*;
 
 /**
  *
@@ -32,16 +34,18 @@ public class ShopEngine implements Shop {
 	}
 
 	@Override
-	public Category createCategory(String name, String url) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category createCategory(String name, String... url)
+			throws shopException, SharkKBException {
+		Category cat = new SharkCategory();
+		cat.setName(name);
+		cat.addUrls(url);
+		return cat;
 	}
 
-	@Override
-	public Category createCategory(String name, String... url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	// @Override
+	// public Category createCategory(String name, String... url) {
+	// return null;
+	// }
 
 	@Override
 	public Product createProduct(String name) {
@@ -51,6 +55,13 @@ public class ShopEngine implements Shop {
 
 	@Override
 	public User createUser(String name, String url) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Category createCategory(String name, String url)
+			throws shopException, SharkException {
 		// TODO Auto-generated method stub
 		return null;
 	}

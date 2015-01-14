@@ -8,51 +8,46 @@ import net.sharkfw.knowledgeBase.*;
  *
  */
 public class SharkCategory implements Category {
-	public SharkCategory() throws SharkKBException {
+	SemanticTag tag = null;
 
+	public SharkCategory(String name, String... url) throws SharkKBException {
+		tag = ShopEngine.getKB().createSemanticTag(name, url);
 	}
 
-	SharkKB kb = ShopEngine.getKB();
-	SemanticNet sn = kb.getTopicsAsSemanticNet();
-	private SNSemanticTag category;
+	public SharkCategory(SemanticTag tag) throws SharkKBException {
+		this.tag = tag;
 
-	public SNSemanticTag getCategory() {
-		return category;
 	}
 
 	@Override
-	public void setCategory(String name, String... urls) {
-		try {
-			this.category = sn.createSemanticTag(name, urls);
-		} catch (SharkKBException e) {
-			e.printStackTrace();
-		}
+	public void setName(String name) {
+		this.tag.setName(name);
 	}
 
 	@Override
 	public void addUrls(String[] urls) throws SharkKBException {
 		for (String url : urls) {
-			this.category.addSI(url);
+			this.tag.addSI(url);
 		}
 	}
 
 	@Override
 	public String getCategoryName() {
-		return this.category.getName().toString();
+		return this.tag.getName();
 	}
 
 	@Override
 	public String[] getUrls() {
-		return category.getSI();
+		return tag.getSI();
 	}
 
 	@Override
 	public void removeUrls(String[] urls) throws SharkKBException {
-		if (category.getSI() != null) {
+		if (tag.getSI() != null) {
 			for (String url : urls) {
-				for (String si : category.getSI()) {
+				for (String si : tag.getSI()) {
 					if (url.equals(si)) {
-						category.removeSI(si);
+						tag.removeSI(si);
 						break;
 					}
 				}

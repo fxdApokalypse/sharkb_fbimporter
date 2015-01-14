@@ -10,7 +10,7 @@ public interface Category extends ShopConcept {
 
 	void setName(String name);
 
-	void addUrls(String urls[]) throws SharkKBException;
+	void addUrls(String... urls) throws SharkKBException;
 
 	void removeUrls(String urls[]) throws SharkKBException;
 

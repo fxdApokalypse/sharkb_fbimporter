@@ -114,7 +114,13 @@ public class SharkProduct implements Product {
 			} catch (SharkKBException e) {
 				e.printStackTrace();
 			}
-			c.setCategory(aTag.getName(), aTag.getSI());
+			// c.setCategory(aTag.getName(), aTag.getSI());
+			c.setName(aTag.getName());
+			try {
+				c.addUrls(aTag.getSI());
+			} catch (SharkKBException e) {
+				e.printStackTrace();
+			}
 			pList.add(c);
 		}
 		Collections.sort(pList, new Comparator<Category>() {
