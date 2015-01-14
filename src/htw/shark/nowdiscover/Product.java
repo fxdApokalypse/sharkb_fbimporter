@@ -5,7 +5,7 @@ import java.util.*;
 import net.sharkfw.knowledgeBase.*;
 
 /**
- * Work in Progress!!!
+ * 
  *
  */
 public interface Product extends ShopConcept {

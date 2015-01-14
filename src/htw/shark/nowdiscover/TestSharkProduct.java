@@ -10,7 +10,7 @@ import net.sharkfw.knowledgeBase.inmemory.*;
 import org.junit.*;
 
 /**
- * Work in Progress!!!
+ * 
  *
  */
 public class TestSharkProduct {

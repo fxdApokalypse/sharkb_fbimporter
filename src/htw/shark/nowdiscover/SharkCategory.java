@@ -4,7 +4,7 @@ import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.knowledgeBase.inmemory.*;
 
 /**
- * Work in Progress!!!
+ * 
  *
  */
 public class SharkCategory implements Category {

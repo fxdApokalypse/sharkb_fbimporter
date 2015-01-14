@@ -8,7 +8,7 @@ import net.sharkfw.knowledgeBase.*;
 import org.junit.*;
 
 /**
- * Work in Progress!!!
+ * 
  *
  */
 public class TestSharkCategory {
