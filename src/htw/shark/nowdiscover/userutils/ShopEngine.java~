@@ -83,7 +83,29 @@ public class ShopEngine implements Shop {
 
     }
 
-
+	// public void storeKnowledge(ShopConcept thing) {
+    //
+    // }
+    //
+    // public void storeKnowledge(Profile profile) {
+    //
+    // }
+    //
+    // public void storeKnowledge(User user) {
+    //
+    // }
+    //
+    // public void storeKnowledge(Product product) {
+    //
+    // }
+    //
+    // public void storeKnowledge(Interest interest) {
+    //
+    // }
+    //
+    // public void storeKnowledge(Category cathegory) {
+    //
+    // }
     @Override
     public void createProfile(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
