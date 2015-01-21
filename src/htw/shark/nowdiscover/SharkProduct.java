@@ -11,20 +11,19 @@ import net.sharkfw.knowledgeBase.*;
  *
  */
 public class SharkProduct implements Product {
+	private static final String IS_RELATED_TO = "isRelatedTo";
+	private static final String BELONGS_TO = "belongsTo";
 	SharkKB kb = ShopEngine.getKB();
-	SemanticNet sn;
+	SemanticNet sn; // do I need this?
 	private SNSemanticTag productTag;
-
-	public SNSemanticTag getProductTag() {
-		return productTag;
-	}
 
 	public SharkProduct(SNSemanticTag productTag) {
 		this.productTag = productTag;
 	}
 
-	private static final String IS_RELATED_TO = "isRelatedTo";
-	private static final String BELONGS_TO = "belongsTo";
+	public SNSemanticTag getProductTag() {
+		return productTag;
+	}
 
 	/**
 	 * Adds related products to a product.
@@ -40,7 +39,7 @@ public class SharkProduct implements Product {
 				this.productTag.setPredicate(IS_RELATED_TO,
 						sProd.getProductTag());
 			} else {
-				System.out.println("Something is wrong with you products!");
+				System.out.println("Something is wrong with your products!");
 			}
 		}
 	}
