@@ -107,13 +107,7 @@ public class SharkProduct implements Product {
 				.targetTags(SharkProduct.BELONGS_TO);
 		while (enumTags != null && enumTags.hasMoreElements()) {
 			SNSemanticTag aTag = enumTags.nextElement();
-			Category c = null;
-			try {
-				c = new SharkCategory();
-			} catch (SharkKBException e) {
-				e.printStackTrace();
-			}
-			// c.setCategory(aTag.getName(), aTag.getSI());
+			Category c = new SharkCategory();
 			c.setName(aTag.getName());
 			try {
 				c.addUrls(aTag.getSI());

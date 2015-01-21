@@ -16,6 +16,9 @@ public class SharkCategory implements Category {
 
 	public SharkCategory(SemanticTag tag) throws SharkKBException {
 		this.tag = tag;
+	}
+
+	public SharkCategory() {
 
 	}
 
