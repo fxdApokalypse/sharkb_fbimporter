@@ -4,66 +4,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package htw.shark.nowdiscover.userutils;
+package sharknowdiscover.htw.shark.nowdiscover.userutils;
 
 /**
  *
  * @author Holland, Sattler
  */
-
 import net.sharkfw.knowledgeBase.*;
 
-public class User {
-	// requires userid v
-	// create pst v
-	// fill with subject identifier v
-	// Methode: return PST v
-	// Methode: delete PST
-	// Methoden zum updaten der Inhalte des PST
+public class User implements User_Interface {
 
-	// WAS FEHLT: TagSet, Knowledgebase, da die meiner Meinung nach außerhalb
-	// der Klasse erzeugt werden müssen
-	// was die Klasse hier returned muss dann in sets und KB geadded werden
-	// und kann da auch wieder rausgeschmissen werden
+    private PeerSemanticTag user;
 
-	// any tag
-	private PeerSemanticTag user;
+    public User(String name, String sui) throws SharkKBException {
+        user.addSI(sui);
+        user.setName(name);
+    }
 
-	// Constructor for the User Class requires a PST
-	public User(String userid, String sui) throws SharkKBException {
-		user.addSI(sui); // string muss übergeben werden, stringarray wird dann
-							// wohl innerhalb des PST angelegt
-		user.setName(userid);
-	}
+    public User(String name) throws SharkKBException {
+        user.setName(name);
+    }
 
-	// Methoden zum Ändern der Inhalte des PST
-	public void setNewSI(PeerSemanticTag user, String sui)
-			throws SharkKBException {
-		user.addSI(sui);
-	}
+    public User() {
+    }
 
-	void removeSI(PeerSemanticTag user) throws SharkKBException {
-		user.removeSI(null);
-	}
+    @Override
+    public User getUser() {
+        return User.this;
+    }
 
-	void setNewName(PeerSemanticTag user, String name) throws SharkKBException {
-		user.setName(name);
-	}
+    @Override
+    public String getName() {
+        return user.getName();
+    }
 
-	// PST wird returned an Controller(Interface) und geht an Constructor von
-	// UserProfile
-	private PeerSemanticTag getPeerSemanticTag() {
-		return user;
-	}
+    @Override
+    public void setName(String name) {
+        user.setName(name);
+    }
 
-	// Löschen: In Java werden Objekte nicht gelöscht. Sobald es keine Verweise
-	// mehr auf das Objekt gibt
-	// weil es zum Beispiel aus allen Sets und KBs entfernt wurde, löscht es der
-	// Garbage Collector selbst
-	/*
-	 * void removePeerSemanticTag () {
-	 * 
-	 * 
-	 * }
-	 */
+    @Override
+    public void setSUI(String... suis) throws SharkKBException {
+        for (String sui : suis) {
+            user.addSI(sui);
+        }
+    }
+
+    @Override
+    public void setSUI(String suis) throws SharkKBException {
+        user.addSI(suis);
+    }
+
+    @Override
+    public String[] getSUI() {
+        return user.getSI();
+    }
 }
