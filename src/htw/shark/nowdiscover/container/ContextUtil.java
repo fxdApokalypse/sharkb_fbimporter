@@ -1,5 +1,6 @@
 package htw.shark.nowdiscover.container;
 
+import htw.shark.nowdiscover.factory.*;
 import htw.shark.nowdiscover.userutils.*;
 import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.knowledgeBase.inmemory.*;

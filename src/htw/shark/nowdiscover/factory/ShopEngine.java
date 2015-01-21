@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package htw.shark.nowdiscover.userutils;
+package htw.shark.nowdiscover.factory;
 
-import htw.shark.nowdiscover.*;
+import htw.shark.nowdiscover.shoputils.*;
+import htw.shark.nowdiscover.userutils.*;
+import htw.shark.nowdiscover.userutils.Interest;
 
 import java.util.*;
 
@@ -22,9 +24,10 @@ import net.sharkfw.system.*;
 public class ShopEngine implements Shop {
 
 	private static ShopEngine instance = null;
-	private static InMemoSharkKB kb;
+	private InMemoSharkKB kb;
 
 	private ShopEngine() {
+		kb = new InMemoSharkKB();
 	}
 
 	public static Shop getShopEngine() {
@@ -34,23 +37,23 @@ public class ShopEngine implements Shop {
 		return instance;
 	}
 
-	public static InMemoSharkKB getKB() {
+	private InMemoSharkKB getKB() {
 		return kb;
 	}
 
 	@Override
 	public Category createCategory(String name, String url)
 			throws shopException, SharkException {
-		Category category = new SharkCategory();
-		category.setName(name);
-		category.addUrls(url);
+
+		Category category = new SharkCategory(this.getKB(), name, url);
+
 		return category;
 	}
 
 	@Override
 	public Category createCategory(String name, String... url)
 			throws shopException, SharkKBException {
-		Category category = new SharkCategory();
+		Category category = new SharkCategory(this.getKB(), name, url);
 		category.setName(name);
 		category.addUrls(url);
 		return category;

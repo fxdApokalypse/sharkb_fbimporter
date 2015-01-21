@@ -1,4 +1,4 @@
-package htw.shark.nowdiscover;
+package htw.shark.nowdiscover.shoputils;
 
 /**
  * 

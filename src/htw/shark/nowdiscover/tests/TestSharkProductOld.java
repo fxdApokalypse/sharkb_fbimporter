@@ -1,11 +1,11 @@
-package htw.shark.nowdiscover;
+package htw.shark.nowdiscover.tests;
 
 
 /**
  * 
  *
  */
-public class TestSharkProduct {
+public class TestSharkProductOld {
 	// SharkKB kb = new InMemoSharkKB();
 	// SemanticNet sn;
 	// SharkProduct testProduct;

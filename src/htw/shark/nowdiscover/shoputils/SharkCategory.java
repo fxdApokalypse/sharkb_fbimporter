@@ -1,6 +1,5 @@
-package htw.shark.nowdiscover;
+package htw.shark.nowdiscover.shoputils;
 
-import htw.shark.nowdiscover.userutils.*;
 import net.sharkfw.knowledgeBase.*;
 
 /**
@@ -10,16 +9,13 @@ import net.sharkfw.knowledgeBase.*;
 public class SharkCategory implements Category {
 	SemanticTag tag = null;
 
-	public SharkCategory(String name, String... url) throws SharkKBException {
-		tag = ShopEngine.getKB().createSemanticTag(name, url);
+	public SharkCategory(SharkKB kb, String name, String... url)
+			throws SharkKBException {
+		tag = kb.getTopicSTSet().createSemanticTag(name, url);
 	}
 
 	public SharkCategory(SemanticTag tag) throws SharkKBException {
 		this.tag = tag;
-	}
-
-	public SharkCategory() {
-
 	}
 
 	@Override

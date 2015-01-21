@@ -1,6 +1,6 @@
 package htw.shark.nowdiscover.sandbox;
 
-import htw.shark.nowdiscover.*;
+import htw.shark.nowdiscover.shoputils.*;
 
 import java.io.*;
 import java.util.*;

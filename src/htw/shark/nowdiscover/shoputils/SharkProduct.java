@@ -1,6 +1,6 @@
-package htw.shark.nowdiscover;
+package htw.shark.nowdiscover.shoputils;
 
-import htw.shark.nowdiscover.userutils.*;
+import htw.shark.nowdiscover.factory.*;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ public class SharkProduct implements Product {
 	private static final String IS_RELATED_TO = "isRelatedTo";
 	private static final String BELONGS_TO = "belongsTo";
 	SharkKB kb = ShopEngine.getKB();
-	SemanticNet sn; // do I need this?
+	SemanticNet sn;
 	private SNSemanticTag productTag;
 
 	public SharkProduct(String name, String url) {

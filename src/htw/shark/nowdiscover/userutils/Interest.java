@@ -5,6 +5,7 @@
  */
 package htw.shark.nowdiscover.userutils;
 
+import htw.shark.nowdiscover.factory.*;
 import net.sharkfw.knowledgeBase.*;
 
 /**

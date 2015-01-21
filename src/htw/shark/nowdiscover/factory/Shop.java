@@ -1,6 +1,8 @@
-package htw.shark.nowdiscover.userutils;
+package htw.shark.nowdiscover.factory;
 
-import htw.shark.nowdiscover.*;
+import htw.shark.nowdiscover.shoputils.*;
+import htw.shark.nowdiscover.userutils.*;
+import htw.shark.nowdiscover.userutils.Interest;
 import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.system.*;
 
