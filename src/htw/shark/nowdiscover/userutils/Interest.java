@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sharknowdiscover.htw.shark.nowdiscover.userutils;
+package htw.shark.nowdiscover.userutils;
 
 import net.sharkfw.knowledgeBase.*;
-import net.sharkfw.knowledgeBase.inmemory.*;
 
 /**
  *
@@ -14,22 +13,23 @@ import net.sharkfw.knowledgeBase.inmemory.*;
  */
 public class Interest implements Interest_Interface {
 
-    ContextPoint cp;
+	ContextPoint cp;
 
-    public Interest(SemanticTag topic, PeerSemanticTag user, String value) throws SharkKBException {
-        SharkKB kb = ShopEngine.getKB();
-        cp = kb.getContextPoint(kb.createContextCoordinates(topic, user, null, null, null, null, SharkCS.DIRECTION_INOUT));
-    }
+	public Interest(SemanticTag shopConcept, PeerSemanticTag user, String value)
+			throws SharkKBException {
+		SharkKB kb = ShopEngine.getKB();
+		cp = kb.getContextPoint(kb.createContextCoordinates(shopConcept, user, null,
+				null, null, null, SharkCS.DIRECTION_INOUT));
+	}
 
-    public Interest(ContextPoint cp){
-    this.cp = cp;
-    
-    }
+	public Interest(ContextPoint cp) {
+		this.cp = cp;
 
-    @Override
-    public Interest getInterest() {
-        return Interest.this ;
-    }
-    
-    
+	}
+
+	@Override
+	public Interest getInterest() {
+		return Interest.this;
+	}
+
 }

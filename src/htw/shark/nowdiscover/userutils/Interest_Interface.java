@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sharknowdiscover.htw.shark.nowdiscover.userutils;
+package htw.shark.nowdiscover.userutils;
 
-import net.sharkfw.knowledgeBase.*;
 
 /**
  *
@@ -13,5 +12,5 @@ import net.sharkfw.knowledgeBase.*;
  */
 public interface Interest_Interface {
 
-    Interest getInterest();
+	Interest getInterest();
 }

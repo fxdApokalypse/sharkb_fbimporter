@@ -35,7 +35,7 @@ public class SharkCategory implements Category {
 	}
 
 	@Override
-	public String getCategoryName() {
+	public String getName() {
 		return this.tag.getName();
 	}
 

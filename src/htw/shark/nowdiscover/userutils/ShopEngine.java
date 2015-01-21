@@ -14,12 +14,12 @@ import net.sharkfw.knowledgeBase.inmemory.*;
 import net.sharkfw.system.*;
 
 /**
- *
+ * The class is a factory for categories, products, users, profiles and
+ * interests and has a Singelton KnowledgedeBase.
+ * 
  * @author Jörn
  */
 public class ShopEngine implements Shop {
-
-	// TODO eventuell listen von objekten
 
 	private static ShopEngine instance = null;
 	private static InMemoSharkKB kb;
@@ -58,16 +58,14 @@ public class ShopEngine implements Shop {
 
 	@Override
 	public Product createProduct(String name, String url) {
-		SemanticTag prodSemTag = InMemoSharkKB.createInMemoSemanticTag(name,
-				url);
-		Product product = new SharkProduct(name);
-		return null;
+		Product product = new SharkProduct(name, url);
+		return product;
 	}
 
 	@Override
 	public Product createProduct(String name, String... url) {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = new SharkProduct(name, url);
+		return product;
 	}
 
 	@Override
@@ -79,7 +77,6 @@ public class ShopEngine implements Shop {
 	public Iterable<Profile> getProfiles() throws SharkKBException {
 
 		// shop engine holen
-		SharkKB kb = null;
 		Knowledge knowledge = SharkCSAlgebra.extract(kb, null);
 		Enumeration<ContextPoint> contextPoints = knowledge.contextPoints();
 		if (contextPoints != null) {

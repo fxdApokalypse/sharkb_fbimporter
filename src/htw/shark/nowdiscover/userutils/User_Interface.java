@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 
-package sharknowdiscover.htw.shark.nowdiscover.userutils;
-
-import java.util.*;
+package htw.shark.nowdiscover.userutils;
 
 import net.sharkfw.knowledgeBase.*;
 
@@ -17,15 +15,15 @@ import net.sharkfw.knowledgeBase.*;
 public interface User_Interface {
 
 	public User getUser();
-        
-        public String getName();
-        
-        public void setName(String name);
 
-	public void setSUI(String... suis) throws SharkKBException;
-        
-        public void setSUI(String suis)throws SharkKBException;
-        
-        public String[] getSUI();
+	public String getName();
+
+	public void setName(String name);
+
+	public void setSI(String... suis) throws SharkKBException;
+
+	// public void setSUI(String suis) throws SharkKBException;
+
+	public String[] getSUI();
 
 }

@@ -37,10 +37,10 @@ public class ImportCSV {
 				String[] imports = line.split(csvSplitBy);
 				SNSemanticTag tmp = sn
 						.createSemanticTag(imports[0], imports[1]);
-				Product p = new SharkProduct(tmp);
+				Product p = new SharkProduct(tmp.getName(), tmp.getSI());
 				products = new ArrayList<Product>();
 				products.add(p);
-				System.out.println(products.get(0).getProductName());
+				System.out.println(products.get(0).getName());
 				counter++;
 				// if (imports.length > 2) {
 				// for (String value : imports) {

@@ -79,7 +79,7 @@ public class SharkProduct implements Product {
 		Collections.sort(pList, new Comparator<Product>() {
 			@Override
 			public int compare(Product p1, Product p2) {
-				return p1.getProductName().compareTo(p2.getProductName());
+				return p1.getName().compareTo(p2.getName());
 			}
 		});
 		return pList;
@@ -100,8 +100,8 @@ public class SharkProduct implements Product {
 				for (int i = 0; i < category.getUrls().length; i++) {
 					arr[i] = category.getUrls()[i];
 				}
-				SNSemanticTag st = sn.createSemanticTag(
-						category.getCategoryName(), arr);
+				SNSemanticTag st = sn
+						.createSemanticTag(category.getName(), arr);
 				this.productTag.setPredicate(BELONGS_TO, st);
 			}
 		} catch (SharkKBException e1) {
@@ -135,7 +135,7 @@ public class SharkProduct implements Product {
 		Collections.sort(pList, new Comparator<Category>() {
 			@Override
 			public int compare(Category c1, Category c2) {
-				return c1.getCategoryName().compareTo(c2.getCategoryName());
+				return c1.getName().compareTo(c2.getName());
 			}
 		});
 		return pList;
@@ -147,8 +147,16 @@ public class SharkProduct implements Product {
 	 * @return - the products name.
 	 */
 	@Override
-	public String getProductName() {
+	public String getName() {
 		return this.getProductTag().getName();
+	}
+
+	/**
+	 * Gets the product's urls.
+	 */
+	@Override
+	public String[] getUrls() {
+		return this.getProductTag().getSI();
 	}
 
 }

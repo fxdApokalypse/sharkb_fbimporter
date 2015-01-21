@@ -21,7 +21,4 @@ public interface Product extends ShopConcept {
 	// get the related products
 	List<Product> getRelatedProducts();
 
-	// returns the product name
-	String getProductName();
-
 }
