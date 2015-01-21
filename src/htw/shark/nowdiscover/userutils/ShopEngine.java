@@ -39,33 +39,39 @@ public class ShopEngine implements Shop {
 	}
 
 	@Override
-	public Category createCategory(String name, String... url)
-			throws shopException, SharkKBException {
-		Category cat = new SharkCategory();
-		cat.setName(name);
-		cat.addUrls(url);
-		return cat;
+	public Category createCategory(String name, String url)
+			throws shopException, SharkException {
+		Category category = new SharkCategory();
+		category.setName(name);
+		category.addUrls(url);
+		return category;
 	}
 
-	// @Override
-	// public Category createCategory(String name, String... url) {
-	// return null;
-	// }
 	@Override
-	public Product createProduct(String name) {
+	public Category createCategory(String name, String... url)
+			throws shopException, SharkKBException {
+		Category category = new SharkCategory();
+		category.setName(name);
+		category.addUrls(url);
+		return category;
+	}
+
+	@Override
+	public Product createProduct(String name, String url) {
+		SemanticTag prodSemTag = InMemoSharkKB.createInMemoSemanticTag(name,
+				url);
+		Product product = new SharkProduct(name);
+		return null;
+	}
+
+	@Override
+	public Product createProduct(String name, String... url) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public User createUser(String name, String url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Category createCategory(String name, String url)
-			throws shopException, SharkException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -17,8 +17,24 @@ public class SharkProduct implements Product {
 	SemanticNet sn; // do I need this?
 	private SNSemanticTag productTag;
 
-	public SharkProduct(SNSemanticTag productTag) {
-		this.productTag = productTag;
+	public SharkProduct(String name, String url) {
+		SNSemanticTag tag = null;
+		try {
+			tag = sn.createSemanticTag(name, url);
+		} catch (SharkKBException e) {
+			e.printStackTrace();
+		}
+		this.productTag = tag;
+	}
+
+	public SharkProduct(String name, String... url) {
+		SNSemanticTag tag = null;
+		try {
+			tag = sn.createSemanticTag(name, url);
+		} catch (SharkKBException e) {
+			e.printStackTrace();
+		}
+		this.productTag = tag;
 	}
 
 	public SNSemanticTag getProductTag() {
@@ -58,7 +74,7 @@ public class SharkProduct implements Product {
 
 		while (enumTags != null && enumTags.hasMoreElements()) {
 			SNSemanticTag aTag = enumTags.nextElement();
-			pList.add(new SharkProduct(aTag));
+			pList.add(new SharkProduct(aTag.getName(), aTag.getSI()));
 		}
 		Collections.sort(pList, new Comparator<Product>() {
 			@Override
