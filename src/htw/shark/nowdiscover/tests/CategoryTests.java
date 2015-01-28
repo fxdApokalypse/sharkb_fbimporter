@@ -5,6 +5,7 @@ import htw.shark.nowdiscover.factory.*;
 import htw.shark.nowdiscover.shoputils.*;
 
 import org.junit.*;
+
 /**
  * Tests for all Categories
  * 
@@ -40,6 +41,14 @@ public class CategoryTests {
 		} else {
 			fail("There category should only have one url.");
 		}
+	}
+
+	@Test
+	public void testCategoryAddUrls() throws Exception {
+		Category category = shop.createCategory("music",
+				"http://en.wikipedia.org/wiki/Music");
+		category.addUrls("music.com");
+		Assert.assertEquals(2, category.getUrls().length);
 
 	}
 }
