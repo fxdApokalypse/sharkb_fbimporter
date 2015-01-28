@@ -25,6 +25,7 @@ public class ShopEngine implements Shop {
 
 	private static ShopEngine instance = null;
 	private InMemoSharkKB kb;
+	private SemanticNet sn;
 
 	private ShopEngine() {
 		kb = new InMemoSharkKB();
@@ -38,7 +39,11 @@ public class ShopEngine implements Shop {
 	}
 
 	private InMemoSharkKB getKB() {
-		return kb;
+		return this.kb;
+	}
+
+	private SemanticNet getSN() {
+		return this.sn;
 	}
 
 	@Override
@@ -61,13 +66,13 @@ public class ShopEngine implements Shop {
 
 	@Override
 	public Product createProduct(String name, String url) {
-		Product product = new SharkProduct(name, url);
+		Product product = new SharkProduct(getKB(), name, url);
 		return product;
 	}
 
 	@Override
 	public Product createProduct(String name, String... url) {
-		Product product = new SharkProduct(name, url);
+		Product product = new SharkProduct(getKB(), name, url);
 		return product;
 	}
 

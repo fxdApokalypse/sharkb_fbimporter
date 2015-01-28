@@ -13,31 +13,32 @@ import net.sharkfw.knowledgeBase.*;
 public class SharkProduct implements Product {
 	private static final String IS_RELATED_TO = "isRelatedTo";
 	private static final String BELONGS_TO = "belongsTo";
-	SharkKB kb = ShopEngine.getKB();
-	SemanticNet sn;
+	// SharkKB kb = ShopEngine.getKB();
+	private SemanticNet sn;
 	private SNSemanticTag productTag;
+	private SharkKB kbase;
 
-	public SharkProduct(String name, String url) {
-		SNSemanticTag tag = null;
+	// http://javarevisited.blogspot.de/2012/01/what-is-constructor-overloading-in-java.html
+	public SharkProduct(SharkKB kb, String name, String url) {
+		this(kb, name, new String[] { url });
 		try {
-			tag = sn.createSemanticTag(name, url);
+			sn = kb.getTopicsAsSemanticNet();
+			this.productTag = sn.createSemanticTag(name, url);
 		} catch (SharkKBException e) {
 			e.printStackTrace();
 		}
-		this.productTag = tag;
 	}
 
-	public SharkProduct(String name, String... url) {
-		SNSemanticTag tag = null;
+	public SharkProduct(SharkKB kb, String name, String... url) {
 		try {
-			tag = sn.createSemanticTag(name, url);
+			sn = kb.getTopicsAsSemanticNet();
+			this.productTag = sn.createSemanticTag(name, url);
 		} catch (SharkKBException e) {
 			e.printStackTrace();
 		}
-		this.productTag = tag;
 	}
 
-	public SNSemanticTag getProductTag() {
+	private SNSemanticTag getProductTag() {
 		return productTag;
 	}
 
@@ -74,7 +75,8 @@ public class SharkProduct implements Product {
 
 		while (enumTags != null && enumTags.hasMoreElements()) {
 			SNSemanticTag aTag = enumTags.nextElement();
-			pList.add(new SharkProduct(aTag.getName(), aTag.getSI()));
+			pList.add(ShopEngine.getShopEngine().createProduct(aTag.getName(),
+					aTag.getSI()));
 		}
 		Collections.sort(pList, new Comparator<Product>() {
 			@Override
@@ -94,7 +96,7 @@ public class SharkProduct implements Product {
 	@Override
 	public void addCategories(List<Category> categories) {
 		try {
-			sn = kb.getTopicsAsSemanticNet();
+			// sn = kbase.getTopicsAsSemanticNet();
 			for (Category category : categories) {
 				String arr[] = new String[category.getUrls().length];
 				for (int i = 0; i < category.getUrls().length; i++) {
@@ -123,10 +125,9 @@ public class SharkProduct implements Product {
 				.targetTags(SharkProduct.BELONGS_TO);
 		while (enumTags != null && enumTags.hasMoreElements()) {
 			SNSemanticTag aTag = enumTags.nextElement();
-			Category c = new SharkCategory();
-			c.setName(aTag.getName());
+			Category c = null;
 			try {
-				c.addUrls(aTag.getSI());
+				c = new SharkCategory(kbase, aTag.getName(), aTag.getSI());
 			} catch (SharkKBException e) {
 				e.printStackTrace();
 			}
