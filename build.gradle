@@ -1,0 +1,43 @@
+/**
+ * A basic gradle build file for 
+ * java based applications.
+ *
+ * For more details Please see: 
+ * https://gradle.org/docs/current/userguide/userguide.html
+ * https://gradle.org/docs/current/userguide/tutorial_java_projects.html
+ */  
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+version = '0.1'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'sharkbfb_importer',
+                   'Implementation-Version': version
+    }
+}
+
+eclipse {
+    classpath {
+       downloadSources=true
+       downloadJavadoc=true
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.restfb:restfb:1.10.1'
+    compile 'joda-time:joda-time:2.7'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.7-beta'
+    runtime fileTree(dir: 'libs', include: '*.jar')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
