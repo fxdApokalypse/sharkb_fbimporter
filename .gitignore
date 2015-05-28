@@ -6,7 +6,8 @@
 .svn/
 bin/
 build/
-
+node_modules/
+bower_components/
 # OS Specific Files
 .DS_Store
 ._.DS_Store

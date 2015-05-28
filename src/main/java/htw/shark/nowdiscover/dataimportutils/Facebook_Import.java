@@ -1,17 +1,27 @@
 package htw.shark.nowdiscover.dataimportutils;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sharkfw.knowledgeBase.SharkKBException;
 
-import org.joda.time.DateTime;
-import org.joda.time.Years;
+import org.apache.commons.lang3.time.StopWatch;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
+import com.restfb.DefaultJsonMapper;
 import com.restfb.FacebookClient;
+import com.restfb.JsonMapper;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.batch.BatchRequest;
+import com.restfb.batch.BatchResponse;
 import com.restfb.types.Page;
 import com.restfb.types.User;
 
@@ -37,15 +47,22 @@ import com.restfb.types.User;
  * an app on facebook or logging in to a website with his facebook
  * account.
  * 
- * @author Jörn Sattler s0542818, Alexander Ihm s0543565
+ * @author Jörn Sattler s0542818, Alexander Ihm s0543565, Yves Kaufmann
  */
 public class Facebook_Import implements Facebook_Import_Interface {
+	
 
+
+	public static void main(String[] args) throws SharkKBException {
+		Facebook_Import importer = new Facebook_Import("CAACEdEose0cBAF9dKj21kCvPMK1gHO7bw0pvSDpj2cEUiFPagQnOu63g8LLoBHg9rOS8ZCcooMMSm6wbKyiNCfTKYYjzgGdmtRMicSEc75qS1ZB2JRQxsXDqQVUx7MbCHN7PjdinNmAU25h4ZCZAXNHv0lOd03OtNR2nyBxsvWAJ33q90Cnbz68p0Ftz49W46KZCDsoZARyuHNUi8mrIcsANIAglAxW6IZD");
+		System.out.println(importer.getAge());
+	}
+	
 	private FacebookClient facebookClient;
 
 	private User user;
 
-	ArrayList<String> likes;
+	List<String> likes;
 
 	/**
 	 * Facebook-import-function
@@ -55,48 +72,81 @@ public class Facebook_Import implements Facebook_Import_Interface {
 	 * @throws SharkKBException
 	 */
 	public Facebook_Import(String accessToken) throws SharkKBException {
+		
+		StopWatch sw = new StopWatch();
+		sw.start();
+		// fetchLikesNonBatch(accessToken);
+		fetchLikesWithBatch(accessToken);
+		sw.stop();
+		System.out.println("Count = " + likes.size());
+		System.out.println("Output = " + likes);
+		System.out.println(sw.getTime());
+	}
 
-		facebookClient = new DefaultFacebookClient(accessToken);
+	private void fetchLikesWithBatch(String accessToken) {
+		
+		facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_3);
+		user = facebookClient.fetchObject("me", User.class);
+		
+		List<BatchRequest> batchLikeRequests = Arrays
+            .asList("likes", "books", "games", "groups", "movies", "television", "videos")
+            .stream()
+            .map((edge) -> new BatchRequest.BatchRequestBuilder( "me/" + edge + "?fields=id,name,link" ).build())
+            .collect(Collectors.toList());
+
+        JsonMapper jsonMapper = new DefaultJsonMapper();
+
+        List<BatchResponse> responses = facebookClient.executeBatch(batchLikeRequests);
+
+        likes = responses
+            .stream()
+            .flatMap((response) -> jsonMapper.toJavaList(response.getBody(), Like.class).stream())
+            .map((like) -> String.format("%s:%s - %s", like.getId(), like.getName(), like.getLink()))
+            .collect(Collectors.toList());
+	}
+
+	private void fetchLikesNonBatch(String accessToken) {
+		facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_3);
 		user = facebookClient.fetchObject("me", User.class);
 		likes = new ArrayList<String>();
-
-		Connection<Page> fetchConnection = facebookClient.fetchConnection("me/likes", Page.class);
+		
+		Parameter onlyName = Parameter.with("fields", "name");
+		Connection<Page> fetchConnection = facebookClient.fetchConnection("me/likes", Page.class, onlyName);
+		
 		// TODO: REFACTORE ME: eliminate duplication
 		for (Page page : fetchConnection.getData()) {
 			likes.add(page.getName());
 		}
-
-		fetchConnection = facebookClient.fetchConnection("me/books", Page.class);
+		
+		fetchConnection = facebookClient.fetchConnection("me/books", Page.class, onlyName);
+		for (Page page : fetchConnection.getData()) {
+			likes.add(page.getName());
+		}
+		
+		fetchConnection = facebookClient.fetchConnection("me/games", Page.class, onlyName);
+		for (Page page : fetchConnection.getData()) {
+			likes.add(page.getName());
+		}
+		
+		fetchConnection = facebookClient.fetchConnection("me/groups", Page.class, onlyName);
+		for (Page page : fetchConnection.getData()) {
+			likes.add(page.getName());
+		}
+		
+		fetchConnection = facebookClient.fetchConnection("me/movies", Page.class, onlyName);
+		for (Page page : fetchConnection.getData()) {
+			likes.add(page.getName());
+		}
+		
+		fetchConnection = facebookClient.fetchConnection("me/television", Page.class, onlyName);
 		for (Page page : fetchConnection.getData()) {
 			likes.add(page.getName());
 		}
 
-		fetchConnection = facebookClient.fetchConnection("me/games", Page.class);
+		fetchConnection = facebookClient.fetchConnection("me/videos", Page.class, onlyName);
 		for (Page page : fetchConnection.getData()) {
 			likes.add(page.getName());
 		}
-
-		fetchConnection = facebookClient.fetchConnection("me/groups", Page.class);
-		for (Page page : fetchConnection.getData()) {
-
-			likes.add(page.getName());
-
-		}
-		fetchConnection = facebookClient.fetchConnection("me/movies", Page.class);
-		for (Page page : fetchConnection.getData()) {
-			likes.add(page.getName());
-		}
-
-		fetchConnection = facebookClient.fetchConnection("me/television", Page.class);
-		for (Page page : fetchConnection.getData()) {
-			likes.add(page.getName());
-		}
-
-		fetchConnection = facebookClient.fetchConnection("me/videos", Page.class);
-		for (Page page : fetchConnection.getData()) {
-			likes.add(page.getName());
-		}
-
 	}
 
 	/**
@@ -106,19 +156,11 @@ public class Facebook_Import implements Facebook_Import_Interface {
 	 */
 	@Override
 	public int getAge() {
-		Date d1 = user.getBirthdayAsDate();
-		Date d2 = new Date(System.currentTimeMillis());
-		DateTime dt1 = new DateTime(d1);
-		DateTime dt2 = new DateTime(d2);
-		Years y1 = Years.yearsBetween(dt1, dt2);
-
-		int age = y1.getYears();
-
-		if (dt2.getMonthOfYear() >= dt1.getMonthOfYear() && dt2.getDayOfMonth() >= dt1.getDayOfMonth()) {
-			age++;
-
-		}
-		return age;
+		
+		LocalDate dateOfBirth = user.getBirthdayAsDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate today = LocalDate.now();
+		
+		return (int) ChronoUnit.YEARS.between(dateOfBirth, today);
 	}
 
 	/**

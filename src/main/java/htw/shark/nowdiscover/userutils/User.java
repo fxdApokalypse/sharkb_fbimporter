@@ -172,9 +172,9 @@ public class User implements User_Interface {
 		for (String s : infos) {
 			if (s.startsWith("birthdate;!")) {
 				user.removeAddress(s);
-				user.addAddress("birthdate;!" + birthdate.toString());
+				user.addAddress("birthdate;!" + birthdate);
 			} else {
-				user.addAddress("birthdate;!" + birthdate.toString());
+				user.addAddress("birthdate;!" + birthdate);
 			}
 		}
 	}
@@ -385,7 +385,6 @@ public class User implements User_Interface {
 		String[] infos = user.getAddresses();
 		for (String s : infos) {
 			if (s.startsWith("like;!")) {
-				String[] k = s.split(";!");
 				Likes.add(s);
 			}
 		}
