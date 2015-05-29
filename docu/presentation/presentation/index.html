@@ -79,14 +79,14 @@
 </section>
 <section class="slide">
     <div class="double">
-        <h2>Struktur der Graph API</h2>
+        <h2>API Requests</h2>
         <div>
-            <h3>Zugriff auf einen Knoten</h3>
+            <h3>Abfrage eines Knoten</h3>
             <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me%3Ffields%3Did%2Cname"><code>GET graph.facebook.com</code> <br>
             <code>v2.3/{node-id}</code></a>
         </div>
         <div style="margin-top:1em;">
-            <h3>Zugriff auf Kanten</h3>
+            <h3>Abfrage der über eine Kante verbundenen Knoten</h3>
             <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends"><code>GET graph.facebook.com</code> <br>
             <code>v2.3/{node-id}/{edge-name}</code></a>
         </div>
@@ -94,7 +94,7 @@
 </section>
 <section class="slide">
     <div>
-        <h2>Struktur der Graph API</h2>
+        <h2>API Requests</h2>
         <div>
             <h3>Zugriff auf Felder</h3>
             <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/posts?fields=caption,timeline_visibility,status_type,privacy,place,description"><code>GET graph.facebook.com</code><br>
@@ -111,21 +111,85 @@
 </section>
 <section class="slide">
     <div>
-        <h2>Struktur der Graph API</h2>
+        <h2>API Requests</h2>
         <div>
-            <h3>Zugriff auf Felder</h3>
-            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/posts?fields=caption,timeline_visibility,status_type,privacy,place,description"><code>GET graph.facebook.com</code><br>
-            <code>v2.3/{node-id}?fields={field-name, ...}</code></a>
+            <h3>Sind zwei Benutzer Freunde ? </h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends/1044920878"><code>GET graph.facebook.com</code><br>
+            <code>v2.3/{user-id}/friends/{user-id2}</code></a>
         </div>
          <div>
-            <h3>Suchen nach Knoten</h3>
-            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=search?q=Ksenia Anatoljevna&type=user"<code>GET graph.facebook.com</code><br>
-            <code>v2.3/search?</code><br>
-            <code>q={query}&</code><br>
-            <code>[type={node}](#searchtypes)</code></a>
+            <h3>Mag ein Benutzer eine Seite ?</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends/1044920878"><code>GET graph.facebook.com</code><br>
+            <code>v2.3/{user-id}/likes/{page-id}</code></a>
         </div>
     </div>    
 </section>
+<section class="slide">
+    <div>
+       <h2>API Requests</h2> 
+        <div>
+        <h3>Abfrage des aktuellen Benutzers.</h3>
+       <span class="i">https://graph.facebook.com/v2.3/<mark class="important">me</mark></span>
+       <pre class="next"><code style="line-height:1;" >
+{
+   "error": {
+      "message": "An active <mark class="important">access token</mark> must be used to " + 
+        "query information about the current user.",
+      "type": "OAuthException",
+      "code": 2500
+   }
+}</code></pre>
+     <div>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <img style="width:100%;height:100%;" class="place m"src="http://i.imgur.com/UNpatrg.gif"/>
+        <h2 style="color:white;text-shadow: 0 0 5px black;"class="next place b">... Access Token ???</h2>      
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Access Token</h2>
+        <p>Ein String der einen Benutzer, App oder Page identifiziert und zur Authentifizierung als dieser genutzt wird. </p>
+        <ul>
+            <li class="">Sind Zeitlich begrenzt 
+                <ul>
+                    <li>Short-Term - Gültigkeitsdauer von 1-2 Stunden</li>
+                    <li>Long-Term - Gültigkeitsdauer von 60 Tagen</li>
+                </ul>
+            </li>
+            <li class="">Sind Portable</li>
+        <ul>    
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Access Token generieren</h2>
+        <img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xat1/t39.2178-6/851559_193529037483274_772207648_n.png" title="login"> 
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Permissions</h2>
+        <ul>
+            <li>Erlauben erst den Zugriff auf interessante Informationen z.b Freunde.</li>
+            <li>Alle Permissions außer "public_profile", "email" und "user_friends" erfordern ein Review seitens Facebooks.</li>
+            <img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xta1/t39.2178-6/851546_620507588026124_290281089_n.png">
+        </ul>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Mögliche Probleme für den Importer</h2>
+        <ul>
+            <li>Der Review Prozess seitens Facebook.</li>
+            <li>Auslesen von Massendaten ist nicht vorgesehen.</li>
+            <li>Jährliche Imports scheinen nicht möglich zu sein, da die Access Tokens zeitlich begrenzt sind.</li>
+        </ul>
+    </div>    
+</section>
+
 
 <!--  build:YEOMAN-GENERATOR-PLACEHOLDER -->
 <!--
