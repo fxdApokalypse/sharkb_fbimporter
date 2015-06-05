@@ -1,4 +1,4 @@
-package htw.shark.util;
+package net.sharkfw.apps.fb.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;

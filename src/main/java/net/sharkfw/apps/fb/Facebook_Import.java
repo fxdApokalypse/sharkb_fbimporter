@@ -1,4 +1,4 @@
-package htw.shark.nowdiscover.dataimportutils;
+package net.sharkfw.apps.fb;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

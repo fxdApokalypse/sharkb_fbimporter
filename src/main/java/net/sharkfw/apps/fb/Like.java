@@ -1,4 +1,4 @@
-package htw.shark.nowdiscover.dataimportutils;
+package net.sharkfw.apps.fb;
 
 import com.restfb.Facebook;
 import com.restfb.types.FacebookType;
