@@ -3,6 +3,8 @@
 .settings/
 .gradle/
 .svn/
+.idea/
+*.iml
 bin/
 build/
 node_modules/
