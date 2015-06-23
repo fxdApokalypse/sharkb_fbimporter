@@ -1,5 +1,22 @@
+.classpath
+.project
+.settings/
+.gradle/
+.svn/
+.idea/
+*.iml
+bin/
+build/
+node_modules/
+bower_components/
+# OS Specific Files
+.DS_Store
+._.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+Dropbox.ini
 *.class
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -8,5 +25,3 @@
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*

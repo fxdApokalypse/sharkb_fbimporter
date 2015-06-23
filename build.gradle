@@ -1,0 +1,53 @@
+/**
+ * A basic gradle build file for 
+ * java based applications.
+ *
+ * For more details Please see: 
+ * https://gradle.org/docs/current/userguide/userguide.html
+ * https://gradle.org/docs/current/userguide/tutorial_java_projects.html
+ */  
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+version = '0.1'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'sharkbfb_importer',
+                   'Implementation-Version': version
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+        jdkName='1.8'
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url "http://repo.springsource.org/libs-release" }
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.7-beta'
+    testCompile 'org.slf4j:jul-to-slf4j:1.7.12'
+    testCompile 'org.apache.logging.log4j:log4j-slf4j-impl:2.3'
+    testCompile 'org.apache.logging.log4j:log4j-core:2.3'
+
+    compile 'org.springframework.social:spring-social-core:1.1.2.RELEASE'
+    compile 'org.springframework.social:spring-social-facebook:2.0.1.RELEASE'
+    compile "org.springframework.social:spring-social-config:1.1.2.RELEASE"
+    compile "org.springframework.social:spring-social-security:1.1.2.RELEASE"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}

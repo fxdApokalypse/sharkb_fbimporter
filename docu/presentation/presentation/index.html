@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Shower Presentation Engine</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=792, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="bower_components/shower-ribbon/styles/screen.css">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="list">
+<header class="caption">
+    <h1>Facebook Importer</h1>
+    <p>Yves Kaufmann</p>
+</header>
+
+<section class="slide cover" id="Cover">
+    <div>
+        <h2>Facebook Importer</h2>
+        <p> <a href="https://github.com/yveskaufmann">Yves Kaufmann</a></p>
+		<img class="cover" src="pictures/shark_bg.jpg">
+        <p class="place b l">
+            Quelle:
+            <a href="https://www.flickr.com/photos/hamur0w0/5812157828/in/photolist-9RAQ2J-c2HyY1-bAhc2h-bqoeST-cLnzhm-dWGFFK-aoE5BE-9at4uD-9FMDa2-dWCFq4-r1JEb3-cX4dT9-95TyPi-ngTUBP-oraxzS-ffnR54-e6CXdv-e1Xefz-dTGvRo-dnjRu8-i1Vaob-bAPdEw-9a8YYo-a7Bj2g-niZemS-i1UPaB-e6CXgT-eeMdVJ-bPHSNa-bPHSEH-iJQ6fi-pyGZJV-8ED4oo-7Tb95t-arTzkX-bAPdQw-7NSHr5-fbEMKT-988yER-ndkwSZ-iwrCmC-qKrTey-fPEz6Q-rgqECP-eDtmsh-oESzw3-qvmuAA-aNeFQ2-h9Nuqz-qXHJxY/">yosuke muroya</a>
+        </p>
+		<!--
+            To apply styles to the certain slides
+            set slide ID to get needed elements
+        -->
+        <style>
+            #Cover h2 {
+                margin: 10px 0 0;
+                color: #FFF;
+                text-align: center;
+                font-size: 70px;
+                text-shadow: 0 0 2px black;
+            }
+
+            #Cover p {
+                margin: 10px;
+                text-align: center;
+                color: #FFF;
+                font-style: italic;
+                font-size: 20px;
+                text-shadow: 0 0 2px black;
+            }
+
+            #Cover p a {
+                color: #FFF;
+            }
+        </style>
+    </div>
+</section>
+<section class="slide">
+    <div>
+        <h2>Facebook Graph API</h2>
+        <ul>
+            <li class="next">
+                Bietet Applikationen Zugriff auf Nutzerdaten
+                <ul>
+                    <li>lesend</li>
+                    <li>schreibend</li>
+                </ul>
+            </li>
+            <li class="next">RESTful basierter Webservice</li>
+            <li class="next">OAuth 2.0 basiertes Zugriffsmodell</li>
+        </ul>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Datenstruktur</h2>
+        <div>
+           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="743px" height="393px" version="1.1"><defs/><g transform="translate(0.5,0.5)"><rect x="51" y="158" width="160" height="80" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 51 184 L 51 158 L 211 158 L 211 184 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(115,166)"><switch><foreignObject pointer-events="all" width="32" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Node</div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="51" y="184" width="160" height="44" fill="none" stroke="none" pointer-events="none"/><g transform="translate(57,191)"><switch><foreignObject pointer-events="all" width="124" height="40" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 40px; max-width: 148px; width: 124px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;"><u>id : string</u><div>is_root_node : boolean</div><div>...</div></div></div></foreignObject><text x="62" y="26" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="471" y="158" width="160" height="80" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 471 184 L 471 158 L 631 158 L 631 184 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(535,166)"><switch><foreignObject pointer-events="all" width="31" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Edge</div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="471" y="184" width="160" height="54" fill="none" stroke="none" pointer-events="none"/><g transform="translate(477,191)"><switch><foreignObject pointer-events="all" width="71" height="44" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 50px; max-width: 148px; width: 71px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;"><u>name : string</u><div>...<br /><div><br /></div></div></div></div></foreignObject><text x="36" y="28" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="71" y="1" width="120" height="93" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 71 27 L 71 1 L 191 1 L 191 27 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(116,9)"><switch><foreignObject pointer-events="all" width="30" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Field</div></div></foreignObject><text x="15" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="71" y="27" width="120" height="54" fill="none" stroke="none" pointer-events="none"/><g transform="translate(77,34)"><switch><foreignObject pointer-events="all" width="72" height="44" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 50px; max-width: 108px; width: 72px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;"><u>name : string</u><div>value: Object</div><div>...</div></div></div></foreignObject><text x="36" y="28" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 131 142.01 L 131 96.24" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 131 157.01 L 126.59 149.51 L 131 142.01 L 135.41 149.51 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 137.5 108.12 L 131 95.12 L 124.5 108.12" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(113,127)"><switch><foreignObject pointer-events="all" width="8" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">1</div></div></foreignObject><text x="4" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 211 211 L 471 211" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(232,193)"><switch><foreignObject pointer-events="all" width="20" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">0..*</div></div></foreignObject><text x="10" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(312,193)"><switch><foreignObject pointer-events="all" width="60" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">connection</div></div></foreignObject><text x="30" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="441" y="188" width="30" height="20" fill="none" stroke="none" pointer-events="none"/><g transform="translate(443,191)"><switch><foreignObject pointer-events="all" width="20" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">0..*</div></div></foreignObject><text x="10" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="1" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 1 362 L 1 336 L 81 336 L 81 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(26,344)"><switch><foreignObject pointer-events="all" width="29" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">User</div></div></foreignObject><text x="15" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="1" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(7,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="191" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 191 362 L 191 336 L 271 336 L 271 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(213,344)"><switch><foreignObject pointer-events="all" width="35" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Event</div></div></foreignObject><text x="18" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="191" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(197,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="291" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 291 362 L 291 336 L 371 336 L 371 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(312,344)"><switch><foreignObject pointer-events="all" width="38" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Group</div></div></foreignObject><text x="19" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="291" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(297,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="96" y="336" width="70" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 96 362 L 96 336 L 166 336 L 166 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(115,344)"><switch><foreignObject pointer-events="all" width="31" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Page</div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="96" y="362" width="70" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(102,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 58px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 41 336 L 82.77 254.14" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 90.49 239 L 90.34 258 L 75.19 250.28 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(45,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 331 336 L 186.45 247.46" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 171.95 238.58 L 190.89 240.21 L 182.01 254.71 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(230,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 231 336 L 162.46 252.04" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 151.71 238.87 L 169.04 246.66 L 155.87 257.41 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(170,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 131 336 L 131 256.12" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 131 239.12 L 139.5 256.12 L 122.5 256.12 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(110,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="441" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 441 362 L 441 336 L 521 336 L 521 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(458,344)"><switch><foreignObject pointer-events="all" width="45" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Friends</div></div></foreignObject><text x="23" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="441" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(447,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="551" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 551 362 L 551 336 L 631 336 L 631 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(574,344)"><switch><foreignObject pointer-events="all" width="33" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Likes</div></div></foreignObject><text x="17" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="551" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(557,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="661" y="336" width="80" height="52" fill="#ffffff" stroke="#000000" pointer-events="none"/><path d="M 661 362 L 661 336 L 741 336 L 741 362 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(681,344)"><switch><foreignObject pointer-events="all" width="40" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; font-weight: bold; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">Family</div></div></foreignObject><text x="20" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica" font-weight="bold">[Not supported by viewer]</text></switch></g><rect x="661" y="362" width="80" height="26" fill="none" stroke="none" pointer-events="none"/><g transform="translate(667,369)"><switch><foreignObject pointer-events="all" width="12" height="16" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; overflow: hidden; max-height: 22px; max-width: 68px; width: 12px; white-space: normal;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;">...</div></div></foreignObject><text x="6" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 481 336 L 527.13 253.8" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 535.45 238.97 L 534.55 257.96 L 519.72 249.64 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(488,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 591 336 L 566.4 257.29" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 561.33 241.07 L 574.52 254.76 L 558.29 259.83 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(555,283)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 701 336 L 599.79 249.75" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 586.85 238.73 L 605.3 243.28 L 594.28 256.22 Z" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(623,282)"><switch><foreignObject pointer-events="all" width="42" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">Extends</div></div></foreignObject><text x="21" y="13" fill="#000000" text-anchor="middle" font-size="11px" font-family="Helvetica">[Not supported by viewer]</text></switch></g></g></svg>
+        </div>
+    </div>    
+</section>
+<section class="slide">
+    <div class="double">
+        <h2>API Requests</h2>
+        <div>
+            <h3>Abfrage eines Knoten</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me%3Ffields%3Did%2Cname"><code>GET graph.facebook.com</code> <br>
+            <code>v2.3/{node-id}</code></a>
+        </div>
+        <div style="margin-top:1em;">
+            <h3>Abfrage der über eine Kante verbundenen Knoten</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends"><code>GET graph.facebook.com</code> <br>
+            <code>v2.3/{node-id}/{edge-name}</code></a>
+        </div>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>API Requests</h2>
+        <div>
+            <h3>Zugriff auf Felder</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/posts?fields=caption,timeline_visibility,status_type,privacy,place,description"><code>GET graph.facebook.com</code><br>
+            <code>v2.3/{node-id}?fields={field-name, ...}</code></a>
+        </div>
+         <div>
+            <h3>Suchen nach Knoten</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=search?q=Ksenia Anatoljevna&type=user"<code>GET graph.facebook.com</code><br>
+            <code>v2.3/search?</code><br>
+            <code>q={query}&</code><br>
+            <code>[type={node}](#searchtypes)</code></a>
+        </div>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>API Requests</h2>
+        <div>
+            <h3>Sind zwei Benutzer Freunde ? </h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends/1044920878"><code>GET graph.facebook.com</code><br>
+            <code>v2.3/{user-id}/friends/{user-id2}</code></a>
+        </div>
+         <div>
+            <h3>Mag ein Benutzer eine Seite ?</h3>
+            <a href="https://developers.facebook.com/tools/explorer?method=GET&path=me/friends/1044920878"><code>GET graph.facebook.com</code><br>
+            <code>v2.3/{user-id}/likes/{page-id}</code></a>
+        </div>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+       <h2>API Requests</h2> 
+        <div>
+        <h3>Abfrage des aktuellen Benutzers.</h3>
+       <span class="i">https://graph.facebook.com/v2.3/<mark class="important">me</mark></span>
+       <pre class="next"><code style="line-height:1;" >
+{
+   "error": {
+      "message": "An active <mark class="important">access token</mark> must be used to " + 
+        "query information about the current user.",
+      "type": "OAuthException",
+      "code": 2500
+   }
+}</code></pre>
+     <div>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <img style="width:100%;height:100%;" class="place m"src="http://i.imgur.com/UNpatrg.gif"/>
+        <h2 style="color:white;text-shadow: 0 0 5px black;"class="next place b">... Access Token ???</h2>      
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Access Token</h2>
+        <p>Ein String der einen Benutzer, App oder Page identifiziert und zur Authentifizierung als dieser genutzt wird. </p>
+        <ul>
+            <li class="">Sind Zeitlich begrenzt 
+                <ul>
+                    <li>Short-Term - Gültigkeitsdauer von 1-2 Stunden</li>
+                    <li>Long-Term - Gültigkeitsdauer von 60 Tagen</li>
+                </ul>
+            </li>
+            <li class="">Sind Portable</li>
+        <ul>    
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Access Token generieren</h2>
+        <img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xat1/t39.2178-6/851559_193529037483274_772207648_n.png" title="login"> 
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Permissions</h2>
+        <ul>
+            <li>Erlauben erst den Zugriff auf interessante Informationen z.b Freunde.</li>
+            <li>Alle Permissions außer "public_profile", "email" und "user_friends" erfordern ein Review seitens Facebooks.</li>
+            <img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xta1/t39.2178-6/851546_620507588026124_290281089_n.png">
+        </ul>
+    </div>    
+</section>
+<section class="slide">
+    <div>
+        <h2>Mögliche Probleme für den Importer</h2>
+        <ul>
+            <li>Der Review Prozess seitens Facebook.</li>
+            <li>Auslesen von Massendaten ist nicht vorgesehen.</li>
+            <li>Jährliche Imports scheinen nicht möglich zu sein, da die Access Tokens zeitlich begrenzt sind.</li>
+        </ul>
+    </div>    
+</section>
+
+
+<!--  build:YEOMAN-GENERATOR-PLACEHOLDER -->
+<!--
+    The line above is used by shower generator to insert slides. Please don't remove.
+-->
+<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
+
+<!--
+    To hide progress bar from entire presentation
+    just remove “progress” element.
+    -->
+<div class="progress">
+    <div></div>
+</div>
+
+<script src="bower_components/shower-core/shower.min.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<!-- Copyright © 2013 Yves Kaufmann -->
+</body>
+</html>
