@@ -1,5 +1,12 @@
 package net.sharkfw.apps.fb.model;
 
+import org.springframework.social.facebook.api.Permission;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FBPermissions {
 
     /**
@@ -341,4 +348,53 @@ public class FBPermissions {
      */
     public static final String RSVP_EVENT = "rsvp_event";
 
+    /**
+     * A Permission which acts as null value which is never granted.
+     */
+    private static final Permission NULL = new Permission("", "declined");;
+
+    /**
+     * Creates a FBPermissions object from a list of FBPermission objects.
+     *
+     * @param permissionList the list of FBPermission objects.
+     *
+     * @return the new created FBPermissions object.
+     */
+    public static FBPermissions from(List<Permission> permissionList) {
+        FBPermissions permissions = new FBPermissions();
+        permissionList.forEach((permission -> {
+            permissions.permissions.put(permission.getName(), permission);
+        }));
+        return permissions;
+    }
+
+    protected Map<String, Permission> permissions = null;
+
+    /**
+     * Create a empty permission object.
+     */
+    public FBPermissions() {
+        permissions = new HashMap<>();
+    }
+
+    /**
+     * Check if a given list of permission were granted by the owner.
+     *
+     * @param permissions the name of permission.
+     * @return true if all given permissions are granted by the owner.
+     */
+    boolean hasGranted(String ...permissions) {
+        return Arrays.asList(permissions).stream().allMatch((permission) -> hasGranted(permission));
+    }
+
+    /**
+     * Check if a given permission was granted by the owner.
+     *
+     * @param permission the name of the permission.
+     * @return true if the given permission was granted by the owner.
+     */
+    boolean hasGranted(String permission) {
+
+        return permissions.getOrDefault(permission, NULL).isGranted();
+    }
 }
