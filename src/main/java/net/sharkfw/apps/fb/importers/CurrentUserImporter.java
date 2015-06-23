@@ -10,18 +10,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.UserOperations;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public class CurrentUserProfileImporter extends BaseFBImporter {
+@Component
+public class CurrentUserImporter extends BaseFBImporter {
 
     public static final String FACEBOOK_USER_MARK = "is_facebook_user";
     private static final String GETTER_PREFFIX = "get";
 
-    private Logger LOG = LoggerFactory.getLogger(CurrentUserProfileImporter.class);
+    private Logger LOG = LoggerFactory.getLogger(CurrentUserImporter.class);
 
     public void performImport() throws FBImportException {
         PeerSemanticTag userTag = null;
@@ -50,6 +52,7 @@ public class CurrentUserProfileImporter extends BaseFBImporter {
             peerSemanticTag.setProperty(FACEBOOK_USER_MARK, "true");
         }
 
+
         return peerSemanticTag;
     }
 
@@ -59,7 +62,7 @@ public class CurrentUserProfileImporter extends BaseFBImporter {
 
         for ( Method method : methods ) {
             if (!method.getName().startsWith(GETTER_PREFFIX)) continue;
-            if ( method.getName().length() > 3) continue;
+            if ( method.getName().length() <= 3) continue;
             if ( method.getParameterCount() > 0 ) continue;
             if ( method.getReturnType() != String.class) continue;
 
@@ -78,5 +81,4 @@ public class CurrentUserProfileImporter extends BaseFBImporter {
     public List<String> getRequiredPermissions() {
         return Arrays.asList(FBPermissions.EMAIL, FBPermissions.USER_ABOUT_ME);
     }
-
 }

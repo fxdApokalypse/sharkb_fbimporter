@@ -43,16 +43,16 @@ public interface FBImporter {
 
     /**
      * Retrieve a list of dependent importers which must
-     * have already runned before this importer could be performed.
+     * have already runned before this importers could be performed.
      *
      * @return the list of dependent importers.
      */
      List<String> getDependentImporters();
 
     /**
-     * Return the unique name of this importer.
+     * Return the unique name of this importers.
      *
-     * @return the name of this importer.
+     * @return the name of this importers.
      */
     default String getName() {
         return this.getClass().getName();
