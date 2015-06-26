@@ -1,6 +1,5 @@
 package net.sharkfw.apps.fb.core.service;
 
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 
 /**
@@ -10,15 +9,17 @@ public class FacebookAccessTokenServiceProvider implements FacebookServiceProvid
 
     private final String appNamespace;
     private final String accessToken;
+    private FacebookTemplate api;
 
     public FacebookAccessTokenServiceProvider(String accessToken, String appNamespace) {
         this.accessToken = accessToken;
         this.appNamespace = appNamespace;
+        api = new FacebookTemplate(accessToken, appNamespace);
     }
 
     @Override
-    public Facebook getApi() {
-        return new FacebookTemplate(accessToken, appNamespace);
+    public FacebookTemplate getApi() {
+        return api;
     }
 
     @Override

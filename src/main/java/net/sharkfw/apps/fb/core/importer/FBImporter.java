@@ -1,6 +1,7 @@
 package net.sharkfw.apps.fb.core.importer;
 
 import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import org.springframework.social.facebook.api.Facebook;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface FBImporter {
      *
      * @throws FBImportException
      */
-    void performImport() throws FBImportException;
+    void performImport() throws FBImportException, SharkKBException;
 
     /**
      * Return an instance of the Facebook API
@@ -43,16 +44,30 @@ public interface FBImporter {
 
     /**
      * Retrieve a list of dependent importers which must
-     * have already runned before this importer could be performed.
+     * have already runned before this importers could be performed.
      *
      * @return the list of dependent importers.
      */
      List<String> getDependentImporters();
 
     /**
-     * Return the unique name of this importer.
+     * <p>Retrieve the import context.</p>
      *
-     * @return the name of this importer.
+     * <p>The Important context is shared between multiple importers in order to share
+     * information between importers.
+     * E.g. so it is possible to reuse the already retrieved user profile or
+     * the user peer by other importers.
+     * </p>
+     *
+     *
+     * @return the importer context singleton.
+     */
+    ImporterContext getContext();
+
+    /**
+     * Return the unique name of this importers.
+     *
+     * @return the name of this importers.
      */
     default String getName() {
         return this.getClass().getName();

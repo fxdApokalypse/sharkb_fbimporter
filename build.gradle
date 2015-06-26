@@ -36,16 +36,17 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'org.slf4j:slf4j-api:1.7.12'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.0.7-beta'
-    testCompile 'org.slf4j:jul-to-slf4j:1.7.12'
-    testCompile 'org.apache.logging.log4j:log4j-slf4j-impl:2.3'
-    testCompile 'org.apache.logging.log4j:log4j-core:2.3'
-
+    compile 'org.slf4j:jcl-over-slf4j:1.7.12'
+    compile 'org.slf4j:jul-to-slf4j:1.7.12'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.3'
+    compile 'org.apache.logging.log4j:log4j-core:2.3'
     compile 'org.springframework.social:spring-social-core:1.1.2.RELEASE'
     compile 'org.springframework.social:spring-social-facebook:2.0.1.RELEASE'
-    compile "org.springframework.social:spring-social-config:1.1.2.RELEASE"
-    compile "org.springframework.social:spring-social-security:1.1.2.RELEASE"
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.7-beta'
+    testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
+
 }
 
 task wrapper(type: Wrapper) {

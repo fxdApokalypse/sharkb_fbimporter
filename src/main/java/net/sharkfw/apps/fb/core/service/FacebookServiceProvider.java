@@ -3,6 +3,7 @@ package net.sharkfw.apps.fb.core.service;
 
 import org.springframework.social.ServiceProvider;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 
 /**
  * A Facebook service provider provide access to the facebook api.
@@ -13,7 +14,7 @@ public interface FacebookServiceProvider extends ServiceProvider<Facebook> {
      *
      * @return the instance of the facebook api
      */
-    Facebook getApi();
+    FacebookTemplate getApi();
 
     /**
      * The name of the current App which should
