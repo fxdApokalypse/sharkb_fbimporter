@@ -3,6 +3,7 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
+import net.sharkfw.apps.fb.util.FacebookUtil;
 import net.sharkfw.knowledgeBase.PeerSemanticNet;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -17,6 +18,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Imports the user related to the specified authorized access token.
+ */
 @Component
 public class CurrentUserImporter extends BaseFBImporter {
 
@@ -33,6 +37,15 @@ public class CurrentUserImporter extends BaseFBImporter {
         try {
             userTag = getPeerSemanticTagOrCreateOne(user);
             fillProperties(userTag, user);
+
+            getContext().setCurrentFBUser(user);
+            getContext().setCurrentUserPeerSemanticTag(userTag);
+
+            if (getSharkKb().getOwner() == null) {
+                getSharkKb().setOwner(userTag);
+            }
+
+
         } catch (SharkKBException e) {
             String message = "Importing the current user profile into the SharkKB failed.";
             LOG.error(message, e);
@@ -40,7 +53,8 @@ public class CurrentUserImporter extends BaseFBImporter {
         }
     }
     private PeerSemanticTag getPeerSemanticTagOrCreateOne(User user) throws SharkKBException {
-        String si = user.getLink();
+        String id = user.getId();
+        String si = FacebookUtil.createUserLink(id);
         String name = user.getName();
         String email = user.getEmail();
 
@@ -51,7 +65,6 @@ public class CurrentUserImporter extends BaseFBImporter {
             peerSemanticTag = peerSemanticNet.createSemanticTag(name, si, email);
             peerSemanticTag.setProperty(FACEBOOK_USER_MARK, "true");
         }
-
 
         return peerSemanticTag;
     }
