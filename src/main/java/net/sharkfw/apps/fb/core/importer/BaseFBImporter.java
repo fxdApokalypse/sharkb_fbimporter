@@ -3,7 +3,6 @@ package net.sharkfw.apps.fb.core.importer;
 import net.sharkfw.apps.fb.core.service.FacebookServiceProvider;
 import net.sharkfw.knowledgeBase.SharkKB;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 
 import java.util.Arrays;
@@ -13,6 +12,9 @@ public abstract class BaseFBImporter implements FBImporter {
 
     @Autowired
     protected FacebookServiceProvider serviceProvider;
+
+    @Autowired
+    protected  ImporterContext importerContext;
 
     @Autowired
     protected SharkKB sharkKB;
@@ -30,5 +32,10 @@ public abstract class BaseFBImporter implements FBImporter {
     @Override
     public List<String> getDependentImporters() {
         return Arrays.asList();
+    }
+
+    @Override
+    public ImporterContext getContext() {
+        return importerContext;
     }
 }

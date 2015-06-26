@@ -7,6 +7,8 @@
 
     <context:component-scan base-package="net.sharkfw.apps.fb.importers"/>
 
+    <bean id="importerContext" class="net.sharkfw.apps.fb.core.importer.ImporterContext" scope="singleton"></bean>
+
     <bean id="fbServiceProvider" class="net.sharkfw.apps.fb.core.service.FacebookAccessTokenServiceProvider">
         <constructor-arg name="accessToken" value=""></constructor-arg>
         <constructor-arg name="appNamespace" value="SharkFBImporter"></constructor-arg>
