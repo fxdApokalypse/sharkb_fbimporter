@@ -1,7 +1,6 @@
 package net.sharkfw.apps.fb.core.service;
 
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
-import org.springframework.stereotype.Component;
 
 /**
  * Provides access to the Facebook service by authentication via a user access token.
