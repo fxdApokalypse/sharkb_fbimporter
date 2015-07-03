@@ -1,20 +1,14 @@
 package net.sharkfw.apps.fb;
 
-import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.core.importer.FBImporter;
-import net.sharkfw.apps.fb.core.importer.ImporterContext;
+import net.sharkfw.apps.fb.core.importer.plan.BaseImportPlan;
+import net.sharkfw.apps.fb.importers.CurrentUserImporter;
 import net.sharkfw.apps.fb.importers.FriendsImporter;
-import net.sharkfw.knowledgeBase.SharkKB;
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.beans.factory.BeanFactoryUtils;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.GenericApplicationContext;
 
-import java.beans.beancontext.BeanContext;
-import java.util.Arrays;
+import java.util.Map;
 
 public class Bootstrap {
 
@@ -40,13 +34,15 @@ public class Bootstrap {
     }
 
     public void run() throws FBImportException {
-        FBImporter userImporter = ctx.getBean("currentUserImporter", FBImporter.class);
-        FBImporter friendImporter = ctx.getBean("friendsImporter", FriendsImporter.class);
+        BaseImportPlan importPlan = new BaseImportPlan();
 
+        Map<String, FBImporter> importers =  ctx.getBeansOfType(FBImporter.class);
+        importers.forEach((name, importer) -> {
+            importPlan.add(importer);
+        });
 
         try {
-            userImporter.performImport();
-            friendImporter.performImport();
+           importPlan.execute();
         } catch(Exception ex) {
             ex.printStackTrace();
         }

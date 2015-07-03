@@ -56,7 +56,6 @@ public class FriendsImporter extends BaseFBImporter {
 
     @Override
     public List<String> getDependentImporters() {
-
         return Arrays.asList(CurrentUserImporter.class.getName());
     }
 }
