@@ -50,7 +50,6 @@ public class FriendsImporter extends BaseFBImporter {
 
     @Override
     public List<String> getRequiredPermissions() {
-
         return Arrays.asList(FBPermissions.USER_FRIENDS);
     }
 

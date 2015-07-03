@@ -28,7 +28,7 @@ public class CurrentUserProfileImporterTests extends BaseFBImporterTests {
 
         String userLink = "https://www.facebook.com/app_scoped_user_id/11111111/";
         PeerSemanticTag userTag = getKB().getPeerSemanticTag(userLink);
-
+;
         Assert.assertNotNull("No PeerSemanticTag was imported", userTag);
         Assert.assertEquals("Hal Emmerich", userTag.getName());
         Assert.assertArrayEquals(new String[]{"sagIchDirNicht@MegaMail.com"}, userTag.getAddresses());
