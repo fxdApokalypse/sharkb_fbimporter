@@ -42,8 +42,7 @@ public class SignificantOtherImporter extends BaseFBImporter {
         }
 
         PeerSNSemanticTag significantOtherTag = KBUtils.createPeerSNTagFrom(significantOther, getSharkKb()) ;
-        significantOtherTag.setPredicate(IN_A_RELATIONSHIP, currentUserTag);
-        currentUserTag.setPredicate(IN_A_RELATIONSHIP, significantOtherTag);
+        KBUtils.connectBidirectional(IN_A_RELATIONSHIP, currentUserTag, significantOtherTag);
     }
 
     @Override

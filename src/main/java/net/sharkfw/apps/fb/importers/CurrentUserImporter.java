@@ -21,8 +21,6 @@ import java.util.List;
 @Component
 public class CurrentUserImporter extends BaseFBImporter {
 
-
-
     private Logger LOG = LoggerFactory.getLogger(CurrentUserImporter.class);
 
     public void performImport() throws FBImportException {

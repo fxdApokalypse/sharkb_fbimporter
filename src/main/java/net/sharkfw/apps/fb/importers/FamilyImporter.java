@@ -3,9 +3,12 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.FacebookUtil;
 import net.sharkfw.apps.fb.util.KBUtils;
-import net.sharkfw.knowledgeBase.*;
+import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
+import net.sharkfw.knowledgeBase.PeerSemanticNet;
+import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.SharkKBException;
+import org.springframework.social.facebook.api.FamilyMember;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.Reference;
 import org.springframework.stereotype.Component;
@@ -23,23 +26,24 @@ import java.util.List;
  * </p>
  */
 @Component
-public class FriendsImporter extends BaseFBImporter {
+public class FamilyImporter extends BaseFBImporter {
 
     @Override
     public void performImport() throws FBImportException, SharkKBException {
 
         PeerSNSemanticTag currentUser = getContext().getCurrentUserPeerSemanticTag();
+        PagedList<FamilyMember> familyMembers = getFacebookAPI().friendOperations().getFamily();
 
-        PagedList<Reference> friends = getFacebookAPI().friendOperations().getFriends();
-        for (Reference friendRef : friends) {
-            PeerSNSemanticTag friendsSemanticTag = KBUtils.createPeerSNTagFrom(friendRef, getSharkKb());
-            KBUtils.connectAsFriends(currentUser, friendsSemanticTag);
+        for (FamilyMember familyMember : familyMembers) {
+            String relationShip = familyMember.getRelationship();
+            PeerSNSemanticTag familyMemberSemanticTag = KBUtils.createPeerSNTagFrom(familyMember, getSharkKb());
+            KBUtils.connectBidirectional(relationShip, currentUser, familyMemberSemanticTag);
         }
     }
 
     @Override
     public List<String> getRequiredPermissions() {
-        return Arrays.asList(FBPermissions.USER_FRIENDS);
+        return Arrays.asList(FBPermissions.USER_RELATIONSHIPS);
     }
 
     @Override
