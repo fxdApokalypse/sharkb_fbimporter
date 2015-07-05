@@ -3,7 +3,7 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.SharkUtil;
+import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import org.slf4j.Logger;
@@ -32,9 +32,7 @@ public class SignificantOtherImporter extends BaseFBImporter {
 
     @Override
     public void performImport() throws FBImportException, SharkKBException {
-        PeerSNSemanticTag currentUserTag = SharkUtil.getPeerSemantigTagAsPeerSNSemanticTag(
-                getContext().getCurrentUserPeerSemanticTag(), getSharkKb()
-        );
+        PeerSNSemanticTag currentUserTag = getContext().getCurrentUserPeerSemanticTag();
 
         Reference significantOther = getFacebookAPI().userOperations().getUserProfile().getSignificantOther();
 
@@ -43,10 +41,9 @@ public class SignificantOtherImporter extends BaseFBImporter {
             return;
         }
 
-        PeerSNSemanticTag significantOtherTag = SharkUtil.getPeerSemanticTagBy(significantOther, getSharkKb());
+        PeerSNSemanticTag significantOtherTag = KBUtils.createPeerSNTagFrom(significantOther, getSharkKb()) ;
         significantOtherTag.setPredicate(IN_A_RELATIONSHIP, currentUserTag);
         currentUserTag.setPredicate(IN_A_RELATIONSHIP, significantOtherTag);
-
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.BaseFBImporterTests;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.util.FacebookUtil;
-import net.sharkfw.apps.fb.util.KBUtil;
+import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.*;
 
 import org.junit.Assert;
@@ -34,7 +34,7 @@ public class FriendsImporterTests extends BaseFBImporterTests {
             .andExpect(method(HttpMethod.GET))
             .andRespond(testResponse("friends"));
 
-        userTag = KBUtil.createPeerSNTagFrom(getTestJSONObject("me", User.class), getKB());
+        userTag = KBUtils.createPeerSNTagFrom(getTestJSONObject("me", User.class), getKB());
         friendsImporter.getContext().setCurrentUserPeerSemanticTag(userTag);
     }
 
@@ -80,10 +80,10 @@ public class FriendsImporterTests extends BaseFBImporterTests {
     }
 
     private List<SNSemanticTag> getFriendshipSrcEdgesFromTestUser() {
-        return Collections.list(userTag.sourceTags(FriendsImporter.FRIENDSHIP_EDGE));
+        return Collections.list(userTag.sourceTags(KBUtils.FRIENDSHIP_EDGE));
     }
 
     private List<SNSemanticTag> getFriendshipTgtEdgesFromTestUser() {
-        return Collections.list(userTag.targetTags(FriendsImporter.FRIENDSHIP_EDGE));
+        return Collections.list(userTag.targetTags(KBUtils.FRIENDSHIP_EDGE));
     }
 }

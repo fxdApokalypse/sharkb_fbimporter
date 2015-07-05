@@ -3,12 +3,8 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.FacebookUtil;
-import net.sharkfw.apps.fb.util.KBUtil;
-import net.sharkfw.apps.fb.util.SharkUtil;
+import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
-import net.sharkfw.knowledgeBase.PeerSemanticNet;
-import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +31,7 @@ public class CurrentUserImporter extends BaseFBImporter {
         User user = userOperations.getUserProfile();
 
         try {
-            userTag = KBUtil.createPeerSNTagFrom(user, getSharkKb());
+            userTag = KBUtils.createPeerSNTagFrom(user, getSharkKb());
 
             getContext().setCurrentFBUser(user);
             getContext().setCurrentUserPeerSemanticTag(userTag);

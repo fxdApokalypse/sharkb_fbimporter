@@ -4,6 +4,7 @@ import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.FacebookUtil;
+import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.*;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.Reference;
@@ -24,12 +25,6 @@ import java.util.List;
 @Component
 public class FriendsImporter extends BaseFBImporter {
 
-    /**
-     * The name of the {@link SNSemanticTag} predicate which
-     * models the friendship relationship between {@link PeerSemanticTag}.
-     */
-    public static final String FRIENDSHIP_EDGE = "friends";
-
     @Override
     public void performImport() throws FBImportException, SharkKBException {
 
@@ -39,13 +34,9 @@ public class FriendsImporter extends BaseFBImporter {
 
         PagedList<Reference> friends = getFacebookAPI().friendOperations().getFriends();
         for (Reference friendRef : friends) {
-            String si = FacebookUtil.createUserLink(friendRef.getId());
-            PeerSNSemanticTag friendsSemanticTag = psNet.createSemanticTag(friendRef.getName(), si, (String) null);
-
-            currentUser.setPredicate(FRIENDSHIP_EDGE, friendsSemanticTag);
-            friendsSemanticTag.setPredicate(FRIENDSHIP_EDGE, currentUser);
+            PeerSNSemanticTag friendsSemanticTag = KBUtils.createPeerSNTagFrom(friendRef, kb);
+            KBUtils.connectAsFriends(currentUser, friendsSemanticTag);
         }
-
     }
 
     @Override

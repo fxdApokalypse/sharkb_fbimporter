@@ -3,7 +3,7 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.BaseFBImporterTests;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.util.FacebookUtil;
-import net.sharkfw.apps.fb.util.KBUtil;
+import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import net.sharkfw.knowledgeBase.TXSemanticTag;
@@ -51,8 +51,7 @@ public class CurrentUserProfileImporterTests extends BaseFBImporterTests {
         TXSemanticTag facebookUsers = importedUserTag.getSuperTag();
 
         Assert.assertNotNull("A imported user have to be the sub tag of a Facebook Users Taxonomy", facebookUsers);
-        Assert.assertArrayEquals(new String[]{KBUtil.FACEBOOK_USERS_TAXONOMY_SI}, facebookUsers.getSI());
-
+        Assert.assertArrayEquals(new String[]{KBUtils.FACEBOOK_USERS_TAXONOMY_SI}, facebookUsers.getSI());
     }
 
     @Test

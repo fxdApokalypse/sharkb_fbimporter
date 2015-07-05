@@ -4,7 +4,6 @@ import net.sharkfw.knowledgeBase.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.FacebookObject;
-import org.springframework.social.facebook.api.Reference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,45 +14,9 @@ import java.util.stream.Collectors;
 /**
  * Helper Methods for handling {@link SharkKB} tasks.
  */
-public class SharkUtil  {
+public class SemanticTagUtils {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SharkUtil.class);
-
-    /**
-     * <p>Retrieves a PeerSemanticTag for a specific FBUser by a User Reference
-     * or create one for the corresponding user. The reference
-     * id is converted to SI and is used for querying the {@link SharkKB} for the
-     * PeerSemanticTag</p>
-     *
-     * @param ref the reference for corresponding user.
-     * @param kb the underlying shark kb.
-     * @return the corresponding {@link PeerSNSemanticTag} for the requested user.
-     * @throws SharkKBException if there was an error accessing the SharkKB.
-     */
-    public static PeerSNSemanticTag getPeerSemanticTagBy(Reference ref, SharkKB kb) throws SharkKBException {
-
-        String si = FacebookUtil.createUserLink(ref.getId());
-        PeerSemanticNet psn = kb.getPeersAsSemanticNet();
-        PeerSNSemanticTag userPT = psn.getSemanticTag(si);
-        if (userPT == null) {
-            userPT = psn.createSemanticTag(ref.getName(), si, (String) null);
-        }
-        return userPT;
-    }
-
-    /**
-     * Converts a PeerSemanticTag to a PeerSNSemanticTag.
-     *
-     * @param pst the to be converted PeerSemanticTag
-     * @param kb the underlying sharkKB
-     * @return the converted {@link PeerSNSemanticTag}
-     * @throws SharkKBException if there was an error converting the PeerSemanticTag.
-     */
-    public static PeerSNSemanticTag getPeerSemantigTagAsPeerSNSemanticTag(PeerSemanticTag pst, SharkKB kb ) throws SharkKBException {
-        PeerSemanticNet psn = kb.getPeersAsSemanticNet();
-        return psn.getSemanticTag(pst.getSI());
-    }
-
+    private static final Logger LOG = LoggerFactory.getLogger(SemanticTagUtils.class);
     private static final String GETTER_PREFIX = "get";
 
     /**
