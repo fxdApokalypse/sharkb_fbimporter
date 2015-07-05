@@ -8,6 +8,8 @@ import org.springframework.social.facebook.api.Reference;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -65,7 +67,6 @@ public class SharkUtil  {
     public static void fillStringProperties(SemanticTag semanticTag, FacebookObject fbObject) throws SharkKBException {
         Class<?>  userClass =  fbObject.getClass();
         Method[] methods = userClass.getMethods();
-
         for ( Method method : methods ) {
             if (!method.getName().startsWith(GETTER_PREFIX)) continue;
             if ( method.getName().length() <= 3) continue;
@@ -76,7 +77,7 @@ public class SharkUtil  {
             try {
                 String value = (String) method.invoke(fbObject);
                 LOG.info(
-                    String.format("Set property for semantic tag %s - %s = %s", semanticTag.getSI(), property, value)
+                    String.format("Set property for semantic tag %s - %s = %s", toString(semanticTag.getSI()), property, value)
                 );
                 semanticTag.setProperty(property, value);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -85,5 +86,9 @@ public class SharkUtil  {
             }
 
         }
+    }
+
+    public static String toString(String si[]) {
+        return "[" + Arrays.stream(si).collect(Collectors.joining(", ")) + "]";
     }
 }

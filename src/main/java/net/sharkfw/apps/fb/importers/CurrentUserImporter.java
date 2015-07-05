@@ -4,7 +4,9 @@ import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.FacebookUtil;
+import net.sharkfw.apps.fb.util.KBUtil;
 import net.sharkfw.apps.fb.util.SharkUtil;
+import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.PeerSemanticNet;
 import net.sharkfw.knowledgeBase.PeerSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
@@ -23,18 +25,17 @@ import java.util.List;
 @Component
 public class CurrentUserImporter extends BaseFBImporter {
 
-    public static final String FACEBOOK_USER_MARK = "is_facebook_user";
+
 
     private Logger LOG = LoggerFactory.getLogger(CurrentUserImporter.class);
 
     public void performImport() throws FBImportException {
-        PeerSemanticTag userTag = null;
+        PeerSNSemanticTag userTag = null;
         UserOperations userOperations = getFacebookAPI().userOperations();
         User user = userOperations.getUserProfile();
 
         try {
-            userTag = getPeerSemanticTagOrCreateOne(user);
-            SharkUtil.fillStringProperties(userTag, user);
+            userTag = KBUtil.createPeerSNTagFrom(user, getSharkKb());
 
             getContext().setCurrentFBUser(user);
             getContext().setCurrentUserPeerSemanticTag(userTag);
@@ -50,22 +51,7 @@ public class CurrentUserImporter extends BaseFBImporter {
             throw new FBImportException(message, e);
         }
     }
-    private PeerSemanticTag getPeerSemanticTagOrCreateOne(User user) throws SharkKBException {
-        String id = user.getId();
-        String si = FacebookUtil.createUserLink(id);
-        String name = user.getName();
-        String email = user.getEmail();
 
-        PeerSemanticNet peerSemanticNet = getSharkKb().getPeersAsSemanticNet();
-        PeerSemanticTag peerSemanticTag = peerSemanticNet.getSemanticTag(si);
-
-        if (peerSemanticTag == null) {
-            peerSemanticTag = peerSemanticNet.createSemanticTag(name, si, email);
-            peerSemanticTag.setProperty(FACEBOOK_USER_MARK, "true");
-        }
-
-        return peerSemanticTag;
-    }
 
     @Override
     public List<String> getRequiredPermissions() {

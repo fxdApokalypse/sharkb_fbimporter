@@ -28,7 +28,7 @@ public class FriendsImporter extends BaseFBImporter {
      * The name of the {@link SNSemanticTag} predicate which
      * models the friendship relationship between {@link PeerSemanticTag}.
      */
-    public static final String FRIENDS_EDGE = "friends";
+    public static final String FRIENDSHIP_EDGE = "friends";
 
     @Override
     public void performImport() throws FBImportException, SharkKBException {
@@ -42,8 +42,8 @@ public class FriendsImporter extends BaseFBImporter {
             String si = FacebookUtil.createUserLink(friendRef.getId());
             PeerSNSemanticTag friendsSemanticTag = psNet.createSemanticTag(friendRef.getName(), si, (String) null);
 
-            currentUser.setPredicate(FRIENDS_EDGE, friendsSemanticTag);
-            friendsSemanticTag.setPredicate(FRIENDS_EDGE, currentUser);
+            currentUser.setPredicate(FRIENDSHIP_EDGE, friendsSemanticTag);
+            friendsSemanticTag.setPredicate(FRIENDSHIP_EDGE, currentUser);
         }
 
     }

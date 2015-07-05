@@ -84,8 +84,8 @@ public class ImporterContext {
      *
      * @return the {@link PeerSemanticTag} for the current facebook user or null if there is no such a PeerSemanticTag.
      */
-    public PeerSemanticTag getCurrentUserPeerSemanticTag() {
-         return getProperty(CURRENT_USER_PEER_SEMANTIC_TAG, PeerSemanticTag.class);
+    public PeerSNSemanticTag getCurrentUserPeerSemanticTag() {
+        return getProperty(CURRENT_USER_PEER_SEMANTIC_TAG, PeerSNSemanticTag.class);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ImporterContext {
      *
      * @param peerSemanticTag the {@link PeerSemanticTag} for the current facebook
      */
-    public void setCurrentUserPeerSemanticTag(PeerSemanticTag peerSemanticTag) {
+    public void setCurrentUserPeerSemanticTag(PeerSNSemanticTag peerSemanticTag) {
         setProperty(CURRENT_USER_PEER_SEMANTIC_TAG, peerSemanticTag);
     }
 
