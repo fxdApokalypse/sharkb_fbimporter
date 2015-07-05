@@ -39,9 +39,11 @@ public class SemanticTagUtils {
             String property =  "fb." + userClass.getSimpleName() + "." + method.getName().substring(GETTER_PREFIX.length()).toLowerCase();
             try {
                 String value = (String) method.invoke(fbObject);
-                LOG.info(
-                    String.format("Set property for semantic tag %s - %s = %s", toString(semanticTag.getSI()), property, value)
-                );
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug(
+                        String.format("Set property for semantic tag %s - %s = %s", toString(semanticTag.getSI()), property, value)
+                    );
+                }
                 semanticTag.setProperty(property, value);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

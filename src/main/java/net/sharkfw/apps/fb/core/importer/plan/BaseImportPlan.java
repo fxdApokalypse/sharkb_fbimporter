@@ -8,6 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.traverse.TopologicalOrderIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import java.util.*;
 
@@ -79,13 +80,22 @@ public class BaseImportPlan implements ImportPlan {
 
     @Override
     public void execute() throws FBImportException {
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
         buildExecutionDAGPlan();
         LOG.info("Executing import plan");
+
         Iterator<ImportPlanEntry> it = executionPlanDAG.iterator();
         while (it.hasNext()) {
             ImportPlanEntry importStep = it.next();
             importStep.execute();
         }
+        stopWatch.stop();
+
+        long importDurationInMS = stopWatch.getTotalTimeMillis();
+        LOG.info(String.format("The duration for all imports in ms: %s", importDurationInMS));
     }
 
     @Override

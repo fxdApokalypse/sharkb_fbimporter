@@ -3,9 +3,10 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.FacebookUtil;
 import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.Reference;
 import org.springframework.stereotype.Component;
@@ -25,16 +26,20 @@ import java.util.List;
 @Component
 public class FriendsImporter extends BaseFBImporter {
 
+    private Logger LOG = LoggerFactory.getLogger(FriendsImporter.class);
+
     @Override
     public void performImport() throws FBImportException, SharkKBException {
 
         PeerSNSemanticTag currentUser = getContext().getCurrentUserPeerSemanticTag();
-
         PagedList<Reference> friends = getFacebookAPI().friendOperations().getFriends();
+
         for (Reference friendRef : friends) {
             PeerSNSemanticTag friendsSemanticTag = KBUtils.createPeerSNTagFrom(friendRef, getSharkKb());
             KBUtils.connectAsFriends(currentUser, friendsSemanticTag);
         }
+
+        LOG.info("Imported friends: " + friends.size());
     }
 
     @Override

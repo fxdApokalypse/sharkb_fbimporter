@@ -2,12 +2,15 @@ package net.sharkfw.apps.fb.importers;
 
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
+import net.sharkfw.apps.fb.model.FBFamilyRelationships;
 import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.PeerSemanticNet;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.FamilyMember;
 import org.springframework.social.facebook.api.PagedList;
 import org.springframework.social.facebook.api.Reference;
@@ -28,6 +31,8 @@ import java.util.List;
 @Component
 public class FamilyImporter extends BaseFBImporter {
 
+    private Logger LOG = LoggerFactory.getLogger(FamilyImporter.class);
+
     @Override
     public void performImport() throws FBImportException, SharkKBException {
 
@@ -35,10 +40,21 @@ public class FamilyImporter extends BaseFBImporter {
         PagedList<FamilyMember> familyMembers = getFacebookAPI().friendOperations().getFamily();
 
         for (FamilyMember familyMember : familyMembers) {
-            String relationShip = familyMember.getRelationship();
-            PeerSNSemanticTag familyMemberSemanticTag = KBUtils.createPeerSNTagFrom(familyMember, getSharkKb());
-            KBUtils.connectBidirectional(relationShip, currentUser, familyMemberSemanticTag);
+            FBFamilyRelationships.connect(currentUser, familyMember, getSharkKb());
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(
+                    String.format(
+                        "Import %s.name=%s as %s",
+                        familyMember.getId(),
+                        familyMember.getName(),
+                        familyMember.getRelationship()
+                    )
+                );
+            }
+
         }
+
+        LOG.info("Imported family members: " + familyMembers.size());
     }
 
     @Override

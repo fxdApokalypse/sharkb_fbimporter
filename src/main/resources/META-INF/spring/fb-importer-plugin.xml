@@ -10,7 +10,7 @@
     <bean id="importerContext" class="net.sharkfw.apps.fb.core.importer.ImporterContext" scope="singleton"></bean>
 
     <bean id="fbServiceProvider" class="net.sharkfw.apps.fb.core.service.FacebookAccessTokenServiceProvider">
-        <constructor-arg name="accessToken" value=""></constructor-arg>
+        <constructor-arg name="accessToken" value="CAAUasF6QS30BANROivXqGqg29KDos8wGYw3G2e1N0xEQrprnpXsxCFeHhOsydMSkV3XpP22VWiVlqz88KfOQRtlXoXzw8hHWG4odXTIHBH8Yk8IDXk9AJQyGlTzIkw5hPUoL7s3QQ3yaUp6weQz48YTpioiTwBf51Iwp7EBDScRyTCFKFQc1tSb0z7Gbn3j8tZA3vlDG78iuh12Q5w9RZBkbnmu0IZD"></constructor-arg>
         <constructor-arg name="appNamespace" value="SharkFBImporter"></constructor-arg>
     </bean>
 
