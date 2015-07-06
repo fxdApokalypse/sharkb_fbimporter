@@ -149,10 +149,4 @@ public class FBFamilyRelationships {
 
     }
 
-
-    public static void main(String[] args) {
-       String a =  normalizeRelationShip("si" + "ster");
-        System.out.println(a);
-    }
-
 }

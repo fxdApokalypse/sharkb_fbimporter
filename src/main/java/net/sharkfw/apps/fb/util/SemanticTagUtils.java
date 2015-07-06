@@ -1,13 +1,19 @@
 package net.sharkfw.apps.fb.util;
 
 import net.sharkfw.knowledgeBase.*;
+import net.sharkfw.knowledgeBase.geom.SharkGeometry;
+import net.sharkfw.knowledgeBase.geom.inmemory.InMemoSharkGeometry;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.FacebookObject;
+import org.springframework.social.facebook.api.Location;
+import org.springframework.social.facebook.api.Page;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 
@@ -55,5 +61,23 @@ public class SemanticTagUtils {
 
     public static String toString(String si[]) {
         return "[" + Arrays.stream(si).collect(Collectors.joining(", ")) + "]";
+    }
+
+    public static TimeSemanticTag createTimeSemanticTag(Date from, long duration, SharkKB kb ) throws SharkKBException {
+        return kb.getTimeSTSet().createTimeSemanticTag(from.getTime(), duration);
+    }
+
+    public static SpatialSemanticTag createSpatialSemanticTag(Page placePage, SharkKB kb) throws SharkKBException {
+
+        if (placePage.getLocation() == null) {
+            throw new IllegalArgumentException("The page don't provide a required location attribute. Maybe this page isn't a location page.");
+        }
+        Location location = placePage.getLocation();
+
+        // TODO: implement this geometry properly when i receive the wisdom of the magic WKT, EWKT and SRS.
+        SharkGeometry geometry = InMemoSharkGeometry.createGeomByEWKT(String.format("POINT(%f, %f)", location.getLatitude(), location.getLongitude()));
+        SpatialSemanticTag ssTag = kb.getSpatialSTSet().createSpatialSemanticTag(placePage.getName(), new String[]{FacebookUtil.createUserLink(placePage.getId())}, geometry);
+        fillStringProperties(ssTag, location);
+        return ssTag;
     }
 }
