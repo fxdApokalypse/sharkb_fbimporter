@@ -8,14 +8,16 @@
  */  
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'distribution'
+apply plugin: 'application'
 
+mainClassName='net.sharkfw.apps.fb.Bootstrap'
 sourceCompatibility = 1.8
-
 version = '0.1'
 jar {
     manifest {
-        attributes 'Implementation-Title': 'sharkbfb_importer',
-                   'Implementation-Version': version
+        attributes 'Implementation-Title': project.name, 'Implementation-Version': version
     }
 }
 
@@ -34,23 +36,105 @@ repositories {
 }
 
 dependencies {
+    /**
+     * Local dependencies like the jar of the shark framework
+     */
     compile fileTree(dir: 'libs', include: '*.jar')
+
+    /**
+     * Required for generating the execution dag for the importers
+     */
     compile 'org.jgrapht:jgrapht-core:0.9.0'
 
+    /**
+     * Underlying Spring Framework dependencies
+     */
+    compile 'org.springframework:spring-core:4.1.7.RELEASE'
+    compile 'org.springframework:spring-beans:4.1.7.RELEASE'
+    compile 'org.springframework:spring-expression:4.1.7.RELEASE'
+    compile 'org.springframework:spring-context:4.1.7.RELEASE'
+    compile 'org.springframework:spring-context-support:4.1.7.RELEASE'
+
+    /**
+     * Facebook API binding
+     */
+    compile 'org.springframework.social:spring-social-facebook:2.0.1.RELEASE'
+
+    /**
+     * Logging dependencies, SLF4j is a nice logging facade which
+     * provides a abstraction for a variety of logging frameworks.
+     * So it is possible to receive logging messages from underlying
+     * libraries or frameworks which uses different logging implementations
+     * like jut, jcl, log4j and so on. Please see:  http://www.slf4j.org/
+     * for more details.
+     */
     compile 'org.slf4j:slf4j-api:1.7.12'
     compile 'org.slf4j:jcl-over-slf4j:1.7.12'
     compile 'org.slf4j:jul-to-slf4j:1.7.12'
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.3'
     compile 'org.apache.logging.log4j:log4j-core:2.3'
-    compile 'org.springframework.social:spring-social-core:1.1.2.RELEASE'
-    compile 'org.springframework.social:spring-social-facebook:2.0.1.RELEASE'
 
+    /**
+     * Testing dependencies
+     */
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.7-beta'
     testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
 
 }
 
+javadoc {
+    description = "Generates aggregated Javadoc API documentation."
+
+    ext.javadocLinks = [
+            "http://docs.oracle.com/javase/8/docs/api/",
+            "http://docs.spring.io/spring/docs/4.1.7.RELEASE/javadoc-api/",
+            "http://docs.spring.io/spring-shell/docs/1.1.0.RELEASE/api/",
+            "http://www.sharksystem.net/javadoc/current/",
+            "http://jgrapht.org/javadoc/",
+            "http://www.slf4j.org/apidocs/index.html"
+    ] as String[]
+
+    title = project.name + " - ${version}"
+    options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
+    //options.overview ="docu/overview.html"
+    options.author = true
+    options.header = project.name
+    options.splitIndex = true
+    options.links(ext.javadocLinks)
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.quiet()
+    failOnError=false
+    maxMemory = "1024m"
+
+    /*
+     * Powered by:
+     * http://gradle.1045684.n5.nabble.com/aggregating-javadocs-td1433469.html
+     */
+    source subprojects.collect { project -> project.sourceSets.main.allJava }
+    destinationDir = new File(buildDir, 'javadoc')
+
+    classpath = files(subprojects.collect {project ->
+        project.sourceSets.main.compileClasspath
+    })
+}
+
+distributions {
+    main {
+        contents {
+            into('conf') {
+                from('conf')
+            }
+            from('README.md')
+            from('LICENSE')
+            into('javadoc') {
+                from(javadoc)
+            }
+        }
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
+

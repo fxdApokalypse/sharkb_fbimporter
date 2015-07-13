@@ -6,16 +6,28 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="net.sharkfw.apps.fb.importers"/>
+    <context:property-placeholder location="file:${user.dir}/conf/conf.properties" />
 
     <bean id="importerContext" class="net.sharkfw.apps.fb.core.importer.ImporterContext" scope="singleton"></bean>
 
     <bean id="fbServiceProvider" class="net.sharkfw.apps.fb.core.service.FacebookAccessTokenServiceProvider">
-        <constructor-arg name="accessToken" value=""></constructor-arg>
+        <constructor-arg name="accessToken" value="${facebook.accessToken}"></constructor-arg>
         <constructor-arg name="appNamespace" value="SharkFBImporter"></constructor-arg>
     </bean>
 
-    <bean id="sharkKB" class="net.sharkfw.knowledgeBase.filesystem.FSSharkKB">
-        <constructor-arg name="rootFolder" value="fbSharkKB/"></constructor-arg>
+    <!-- The actual SharkKB which should used by the importer -->
+    <bean id="sharkKB" parent="${sharkKB}" ></bean>
+
+    <!-- Shark Knowledge base implementations. -->
+    <bean id="InMemoSharkKB" class="net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB" abstract="true"></bean>
+
+    <bean id="FSSharkKB" class="net.sharkfw.knowledgeBase.filesystem.FSSharkKB" abstract="true">
+        <constructor-arg name="rootFolder" value="${sharkKB.file.rootFolder}"></constructor-arg>
     </bean>
 
+    <bean id="SQLSharkKB" class="net.sharkfw.knowledgeBase.sql.SQLSharkKB" abstract="true" destroy-method="close">
+        <constructor-arg name="connectionString" value="${sharkKB.db.connectionURL}"></constructor-arg>
+        <constructor-arg name="user" value="${sharkKB.db.user}"></constructor-arg>
+        <constructor-arg name="pwd" value="${sharkKB.db.pwd}"></constructor-arg>
+    </bean>
 </beans>
