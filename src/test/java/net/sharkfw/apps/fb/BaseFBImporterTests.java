@@ -60,7 +60,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
 
     @Configuration
     @Import(value = AppConfig.class)
-    @PropertySource(value = "classpath*:/conf/test.properties")
+    @PropertySource(value = "conf/test.properties")
     static class TestConfig {
         @Bean
         SharkKB sharkKB() {

@@ -37,8 +37,14 @@ public class SignificantOtherImporter extends BaseFBImporter {
         Reference significantOther = getFacebookAPI().userOperations().getUserProfile().getSignificantOther();
 
         if (significantOther == null) {
-            LOG.warn(String.format("The significant other of the user '%s' isn't retrieve able", currentUserTag.getSI()));
+            LOG.warn(
+                    String.format(
+                            "The significant other of the user '%s' isn't retrieve able",
+                            String.join(", ", currentUserTag.getSI())
+                    )
+            );
             return;
+
         }
 
         PeerSNSemanticTag significantOtherTag = KBUtils.createPeerSNTagFrom(significantOther, getSharkKb()) ;
