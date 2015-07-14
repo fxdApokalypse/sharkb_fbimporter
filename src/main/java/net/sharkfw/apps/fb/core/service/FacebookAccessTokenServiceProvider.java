@@ -1,5 +1,6 @@
 package net.sharkfw.apps.fb.core.service;
 
+import net.sharkfw.apps.fb.core.cache.CacheManager;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 
 /**
@@ -15,6 +16,7 @@ public class FacebookAccessTokenServiceProvider implements FacebookServiceProvid
         this.accessToken = accessToken;
         this.appNamespace = appNamespace;
         api = new FacebookTemplate(accessToken, appNamespace);
+        CacheManager.makeCacheable(api);
     }
 
     @Override

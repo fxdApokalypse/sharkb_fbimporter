@@ -28,10 +28,8 @@ public class CachedRequestInterceptor implements ClientHttpRequestInterceptor {
 
 		boolean requestShouldBeCached = requestShouldBeCached(request);
 
-		if (requestShouldBeCached) {
-			if ( cache.hasResponse(request)) {
-				return cache.get(request);
-			}
+		if (requestShouldBeCached && cache.hasResponse(request)) {
+			return cache.get(request);
 		}
 
 		ClientHttpResponse response = execution.execute(request, body);

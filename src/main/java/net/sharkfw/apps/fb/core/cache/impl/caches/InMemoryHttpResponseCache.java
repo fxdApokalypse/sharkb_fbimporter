@@ -42,6 +42,8 @@ public class InMemoryHttpResponseCache implements HttpRequestCache {
 	@Override
 	public void cache(HttpRequest request, ClientHttpResponse response) {
 		cachedEntries.put(toKey(request), response);
+		System.out.println(response.getClass().getName());
+
 	}
 
 	@Override

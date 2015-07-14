@@ -12,6 +12,6 @@
         <constructor-arg name="appNamespace" value="SharkFBImporter"></constructor-arg>
     </bean>
 
-    <bean id="sharkKB" class="net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB"></bean>
+    <bean id="sharkKB" parent="InMemoSharkKB"></bean>
 
 </beans>

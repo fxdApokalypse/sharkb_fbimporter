@@ -2,24 +2,35 @@ package net.sharkfw.apps.fb;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sharkfw.apps.fb.conf.AppConfig;
 import net.sharkfw.apps.fb.core.service.FacebookServiceProvider;
 import net.sharkfw.knowledgeBase.SharkKB;
+import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.social.facebook.api.GraphApi;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.api.impl.json.FacebookModule;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.client.response.DefaultResponseCreator;
+import org.springframework.util.StreamUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
@@ -29,22 +40,73 @@ import java.util.stream.Collectors;
 
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+/**
+ * A base test class for testing classes which are depends
+ * on the Facebook REST Web Service.
+ *
+ * This class provides access to a mocked RestServer,
+ * and provides convenient access to:
+ * <ul>
+ *     <li>Test Data</li>
+ *     <li>SharkKB</li>
+ *     <li>Facebook API</li>
+ *     <li>Spring Application Context</li>
+ * </ul>
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/META-INF/spring/test-fb-importer-plugin.xml")
+@ContextConfiguration(classes = BaseFBImporterTests.TestConfig.class, loader=AnnotationConfigContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public abstract class BaseFBImporterTests implements ApplicationContextAware {
+
+    @Configuration
+    @Import(value = AppConfig.class)
+    @PropertySource(value = "classpath*:/conf/test.properties")
+    static class TestConfig {
+        @Bean
+        SharkKB sharkKB() {
+            return new InMemoSharkKB();
+        }
+    }
+
+    /**
+     * This class is used to overcome a limitation in the {@link MockRestServiceServer}
+     * where only one request to a resource is possible, because after the first request
+     * the resource is closed and so multiple requests to the same resources were not possible.
+     *
+     * This class resets the stream on close in order to overcome the
+     * above desribed problem, so that the stream is reusable by the {@link MockRestServiceServer}
+     */
+    class ResetOnCloseClassPathResource extends ClassPathResource {
+        private byte[] buffer;
+        public ResetOnCloseClassPathResource(String path) {
+            super(path);
+        }
+
+        @Override
+        public InputStream getInputStream() throws IOException {
+            buffer = StreamUtils.copyToByteArray(super.getInputStream());
+            return  new ByteArrayInputStream(buffer) {
+                @Override
+                public void close() throws IOException {
+                    super.close();
+                    pos = 0;
+                }
+            };
+        }
+    }
 
     /**
      * The ServiceProvider for the facebook api.
      */
     @Autowired
-    protected FacebookServiceProvider fbServiceProvider;
+    private FacebookServiceProvider fbServiceProvider;
 
     /**
      * The test SharkKB
      */
     @Autowired
-    protected SharkKB testSharkKB;
+    @Qualifier("sharkKB")
+    private SharkKB sharkKB;
 
     /**
      * The Mock for the facebook api
@@ -54,13 +116,14 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
     /**
      * The Spring Context for this test
      */
-    protected ApplicationContext ctx;
+    private ApplicationContext ctx;
 
     /**
      * The Mapper which is used for creating test objects
      * from json files.
      */
-    protected ObjectMapper jsonMapper;
+    private ObjectMapper jsonMapper;
+
 
     /**
      * Initialize the base test.
@@ -79,6 +142,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
     public void createMockServer() {
         mockServer = MockRestServiceServer.createServer(fbServiceProvider.getApi().getRestTemplate());
     }
+
 
     /**
      * Retrieves a response json stub for a corresponding test data.
@@ -153,7 +217,8 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
 
 
     private ClassPathResource getTestResponse(String testData) {
-        return new ClassPathResource("test-data/" + testData + ".json", getClass());
+        ClassPathResource res =  new ResetOnCloseClassPathResource("/test-data/" + testData + ".json");
+        return res;
     }
 
 
@@ -185,7 +250,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
      * @return the shark kb which is used for this test.
      */
     public SharkKB getKB() {
-        return testSharkKB;
+        return sharkKB;
     }
 
     /**
@@ -200,5 +265,23 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.ctx = applicationContext;
+    }
+
+    /**
+     * The Facebook API Template which encapsulates the access to the fb rest service
+     * in object oriented manner.
+     *
+     * @return the fb api template.
+     */
+    public FacebookTemplate getFBApi() {
+        return fbServiceProvider.getApi();
+    }
+
+    /**
+     * The Mapper which is used for creating test objects
+     * from json files.
+     */
+    public ObjectMapper getJSONMapper() {
+        return this.jsonMapper;
     }
 }

@@ -4,8 +4,9 @@ import net.sharkfw.apps.fb.BaseFBImporterTests;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.util.FacebookUtil;
 import net.sharkfw.apps.fb.util.KBUtils;
-import net.sharkfw.knowledgeBase.*;
-
+import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
+import net.sharkfw.knowledgeBase.SNSemanticTag;
+import net.sharkfw.knowledgeBase.SharkKBException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
