@@ -2,8 +2,8 @@ package net.sharkfw.apps.fb.importers;
 
 import net.sharkfw.apps.fb.BaseFBImporterTests;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
-import net.sharkfw.apps.fb.util.FacebookUtil;
-import net.sharkfw.apps.fb.util.KBUtils;
+import net.sharkfw.apps.fb.util.facebook.FacebookUtil;
+import net.sharkfw.apps.fb.util.shark.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.SNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;

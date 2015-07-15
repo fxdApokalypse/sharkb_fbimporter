@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.model;
 
-import net.sharkfw.apps.fb.util.KBUtils;
+import net.sharkfw.apps.fb.util.shark.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;

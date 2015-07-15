@@ -3,7 +3,7 @@ package net.sharkfw.apps.fb.importers;
 import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.KBUtils;
+import net.sharkfw.apps.fb.util.shark.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import org.slf4j.Logger;

@@ -1,14 +1,17 @@
-package net.sharkfw.apps.fb.util;
+package net.sharkfw.apps.fb.util.shark;
 
+import net.sharkfw.apps.fb.util.ReflectionFilters;
+import net.sharkfw.apps.fb.util.facebook.FacebookUtil;
 import net.sharkfw.knowledgeBase.*;
 import net.sharkfw.knowledgeBase.geom.SharkGeometry;
 import net.sharkfw.knowledgeBase.geom.inmemory.InMemoSharkGeometry;
-import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
+import net.sharkfw.system.SharkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.FacebookObject;
 import org.springframework.social.facebook.api.Location;
 import org.springframework.social.facebook.api.Page;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,14 +38,9 @@ public class SemanticTagUtils {
      */
     public static void fillStringProperties(SemanticTag semanticTag, FacebookObject fbObject) throws SharkKBException {
         Class<?>  userClass =  fbObject.getClass();
-        Method[] methods = userClass.getMethods();
-        for ( Method method : methods ) {
-            if (!method.getName().startsWith(GETTER_PREFIX)) continue;
-            if ( method.getName().length() <= 3) continue;
-            if ( method.getParameterCount() > 0 ) continue;
-            if ( method.getReturnType() != String.class) continue;
 
-            String property =  "fb." + userClass.getSimpleName() + "." + method.getName().substring(GETTER_PREFIX.length()).toLowerCase();
+        ReflectionUtils.MethodCallback setPropertyByField = (Method method) -> {
+            String property = "fb." + userClass.getSimpleName() + "." + method.getName().substring(GETTER_PREFIX.length()).toLowerCase();
             try {
                 String value = (String) method.invoke(fbObject);
                 if (LOG.isDebugEnabled()) {
@@ -51,12 +49,18 @@ public class SemanticTagUtils {
                     );
                 }
                 semanticTag.setProperty(property, value);
-            } catch (IllegalAccessException | InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException | SharkKBException e) {
                 e.printStackTrace();
                 LOG.error(String.format("Access the getter '%s' failed", method.getName()), e);
             }
+        };
 
-        }
+        ReflectionUtils.doWithMethods(
+            userClass,
+            setPropertyByField,
+            ReflectionFilters.isGetterMethod(String.class)
+        );
+
     }
 
     public static String toString(String si[]) {
@@ -72,11 +76,14 @@ public class SemanticTagUtils {
         if (placePage.getLocation() == null) {
             throw new IllegalArgumentException("The page don't provide a required location attribute. Maybe this page isn't a location page.");
         }
-        Location location = placePage.getLocation();
+        return createSpatialSemanticTag(placePage.getLocation(), kb);
+    }
+
+    public static SpatialSemanticTag createSpatialSemanticTag(Location location, SharkKB kb) throws SharkKBException {
 
         // TODO: implement this geometry properly when i receive the wisdom of the magic WKT, EWKT and SRS.
         SharkGeometry geometry = InMemoSharkGeometry.createGeomByEWKT(String.format("POINT(%f, %f)", location.getLatitude(), location.getLongitude()));
-        SpatialSemanticTag ssTag = kb.getSpatialSTSet().createSpatialSemanticTag(placePage.getName(), new String[]{FacebookUtil.createUserLink(placePage.getId())}, geometry);
+        SpatialSemanticTag ssTag = kb.getSpatialSTSet().createSpatialSemanticTag(location.getName(), new String[]{FacebookUtil.createUserLink(location.getId())}, geometry);
         fillStringProperties(ssTag, location);
         return ssTag;
     }

@@ -4,16 +4,12 @@ import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBFamilyRelationships;
 import net.sharkfw.apps.fb.model.FBPermissions;
-import net.sharkfw.apps.fb.util.KBUtils;
 import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
-import net.sharkfw.knowledgeBase.PeerSemanticNet;
-import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.FamilyMember;
 import org.springframework.social.facebook.api.PagedList;
-import org.springframework.social.facebook.api.Reference;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

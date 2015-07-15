@@ -1,14 +1,10 @@
 package net.sharkfw.apps.fb.core.cache.impl.filters;
 
-import net.sharkfw.apps.fb.core.cache.HttpRequestCache;
 import net.sharkfw.apps.fb.core.cache.HttpRequestCacheFilter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
 
 
 /**

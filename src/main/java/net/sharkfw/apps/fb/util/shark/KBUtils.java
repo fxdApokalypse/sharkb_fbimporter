@@ -1,5 +1,6 @@
-package net.sharkfw.apps.fb.util;
+package net.sharkfw.apps.fb.util.shark;
 
+import net.sharkfw.apps.fb.util.facebook.FacebookUtil;
 import net.sharkfw.knowledgeBase.*;
 import org.springframework.social.facebook.api.Reference;
 import org.springframework.social.facebook.api.User;
@@ -11,7 +12,7 @@ public class KBUtils {
      * The si for the facebook user taxonomy which is
      * used to sign a peer tag as imported facebook user.
      */
-    public static final String FACEBOOK_USERS_TAXONOMY_SI = "https://facebook.com/users";
+    public static final String FACEBOOK_USERS_TAXONOMY_SI = "https://facebook.com/user";
 
     /**
      * The name for the facebook user taxonomy which is

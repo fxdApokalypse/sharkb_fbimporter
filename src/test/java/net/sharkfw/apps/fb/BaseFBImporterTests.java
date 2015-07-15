@@ -152,7 +152,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
      * @return the response stub
      */
     public DefaultResponseCreator testResponse(String testData) {
-        return withSuccess(getTestResponse(testData), MediaType.APPLICATION_JSON);
+        return withSuccess(getTestResource(testData), MediaType.APPLICATION_JSON);
     }
 
     /**
@@ -174,7 +174,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
      */
     @SuppressWarnings("unchecked")
     public <T> T getTestJSONObject(String testData, Class<T> type) {
-        ClassPathResource jsonResource = getTestResponse(testData);
+        ClassPathResource jsonResource = getTestResource(testData);
         try (InputStream in = jsonResource.getInputStream()) {
             return jsonMapper.readValue(in, type);
         } catch(IOException ex) {
@@ -216,7 +216,7 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
 
 
 
-    private ClassPathResource getTestResponse(String testData) {
+    public ClassPathResource getTestResource(String testData) {
         ClassPathResource res =  new ResetOnCloseClassPathResource("/test-data/" + testData + ".json");
         return res;
     }
