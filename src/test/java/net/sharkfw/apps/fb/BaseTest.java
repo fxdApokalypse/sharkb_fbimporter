@@ -3,10 +3,8 @@ package net.sharkfw.apps.fb;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sharkfw.apps.fb.conf.AppConfig;
-import net.sharkfw.apps.fb.core.service.FacebookServiceProvider;
 import net.sharkfw.knowledgeBase.SharkKB;
 import net.sharkfw.knowledgeBase.inmemory.InMemoSharkKB;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +16,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
-import org.springframework.social.facebook.api.GraphApi;
-import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.api.impl.json.FacebookModule;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.test.web.client.response.DefaultResponseCreator;
 import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayInputStream;
@@ -36,27 +30,11 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
-
-/**
- * A base test class for testing classes which are depends
- * on the Facebook REST Web Service.
- *
- * This class provides access to a mocked RestServer,
- * and provides convenient access to:
- * <ul>
- *     <li>Test Data</li>
- *     <li>SharkKB</li>
- *     <li>Facebook API</li>
- *     <li>Spring Application Context</li>
- * </ul>
- */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = BaseFBImporterTests.TestConfig.class, loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = BaseTest.TestConfig.class, loader=AnnotationConfigContextLoader.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public abstract class BaseFBImporterTests implements ApplicationContextAware {
+public abstract class BaseTest implements ApplicationContextAware {
 
     @Configuration
     @Import(value = AppConfig.class)
@@ -69,90 +47,24 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
     }
 
     /**
-     * This class is used to overcome a limitation in the {@link MockRestServiceServer}
-     * where only one request to a resource is possible, because after the first request
-     * the resource is closed and so multiple requests to the same resources were not possible.
-     *
-     * This class resets the stream on close in order to overcome the
-     * above desribed problem, so that the stream is reusable by the {@link MockRestServiceServer}
+     * The Mapper which is used for creating test objects
+     * from json files.
      */
-    class ResetOnCloseClassPathResource extends ClassPathResource {
-        private byte[] buffer;
-        public ResetOnCloseClassPathResource(String path) {
-            super(path);
-        }
-
-        @Override
-        public InputStream getInputStream() throws IOException {
-            buffer = StreamUtils.copyToByteArray(super.getInputStream());
-            return  new ByteArrayInputStream(buffer) {
-                @Override
-                public void close() throws IOException {
-                    super.close();
-                    pos = 0;
-                }
-            };
-        }
-    }
-
-    /**
-     * The ServiceProvider for the facebook api.
-     */
-    @Autowired
-    private FacebookServiceProvider fbServiceProvider;
-
+    protected ObjectMapper jsonMapper;
     /**
      * The test SharkKB
      */
     @Autowired
     @Qualifier("sharkKB")
     private SharkKB sharkKB;
-
-    /**
-     * The Mock for the facebook api
-     */
-    protected MockRestServiceServer mockServer;
-
     /**
      * The Spring Context for this test
      */
     private ApplicationContext ctx;
 
-    /**
-     * The Mapper which is used for creating test objects
-     * from json files.
-     */
-    private ObjectMapper jsonMapper;
-
-
-    /**
-     * Initialize the base test.
-     */
-    public BaseFBImporterTests() {
+    public BaseTest() {
         jsonMapper = new ObjectMapper();
         jsonMapper.registerModule(new FacebookModule());
-    }
-
-    /**
-     * Create a RestMockServer which can be obtained by the field {@link #mockServer}.
-     * This mock server mocks the facebook rest api in order to
-     * test the import without accessing the facebook api through the rest interface.
-     */
-    @Before
-    public void createMockServer() {
-        mockServer = MockRestServiceServer.createServer(fbServiceProvider.getApi().getRestTemplate());
-    }
-
-
-    /**
-     * Retrieves a response json stub for a corresponding test data.
-     *
-     * @param testData the name of the test-data
-     *
-     * @return the response stub
-     */
-    public DefaultResponseCreator testResponse(String testData) {
-        return withSuccess(getTestResource(testData), MediaType.APPLICATION_JSON);
     }
 
     /**
@@ -214,33 +126,9 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
         return null;
     }
 
-
-
     public ClassPathResource getTestResource(String testData) {
         ClassPathResource res =  new ResetOnCloseClassPathResource("/test-data/" + testData + ".json");
         return res;
-    }
-
-
-
-    /**
-     * Builds url to the facebook api.
-     *
-     * @param path the path of the desired resource.
-     * @param fields the desired fields of the desired resource.
-     *
-     * @return the url to the desired URL.
-     */
-    public String getFBUrl(String path, String ...fields) {
-        StringBuilder url = new StringBuilder();
-        url.append(GraphApi.GRAPH_API_URL).append(path);
-
-        if (fields.length > 0) {
-            url.append("?fields=");
-            url.append(Arrays.stream(fields).collect(Collectors.joining("%2C")));
-        }
-
-        return url.toString();
     }
 
     /**
@@ -268,20 +156,38 @@ public abstract class BaseFBImporterTests implements ApplicationContextAware {
     }
 
     /**
-     * The Facebook API Template which encapsulates the access to the fb rest service
-     * in object oriented manner.
-     *
-     * @return the fb api template.
-     */
-    public FacebookTemplate getFBApi() {
-        return fbServiceProvider.getApi();
-    }
-
-    /**
      * The Mapper which is used for creating test objects
      * from json files.
      */
     public ObjectMapper getJSONMapper() {
         return this.jsonMapper;
+    }
+
+
+    /**
+     * This class is used to overcome a limitation in the {@link MockRestServiceServer}
+     * where only one request to a resource is possible, because after the first request
+     * the resource is closed and so multiple requests to the same resources were not possible.
+     *
+     * This class resets the stream on close in order to overcome the
+     * above desribed problem, so that the stream is reusable by the {@link MockRestServiceServer}
+     */
+    class ResetOnCloseClassPathResource extends ClassPathResource {
+        private byte[] buffer;
+        public ResetOnCloseClassPathResource(String path) {
+            super(path);
+        }
+
+        @Override
+        public InputStream getInputStream() throws IOException {
+            buffer = StreamUtils.copyToByteArray(super.getInputStream());
+            return  new ByteArrayInputStream(buffer) {
+                @Override
+                public void close() throws IOException {
+                    super.close();
+                    pos = 0;
+                }
+            };
+        }
     }
 }

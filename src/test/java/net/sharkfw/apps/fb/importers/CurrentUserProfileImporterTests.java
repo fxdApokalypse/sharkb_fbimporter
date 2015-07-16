@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.importers;
 
-import net.sharkfw.apps.fb.BaseFBImporterTests;
+import net.sharkfw.apps.fb.FBImporterTest;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.util.facebook.FacebookUtil;
 import net.sharkfw.apps.fb.util.shark.KBUtils;
@@ -18,7 +18,7 @@ import org.springframework.social.facebook.api.UserOperations;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 
-public class CurrentUserProfileImporterTests extends BaseFBImporterTests {
+public class CurrentUserProfileImporterTests extends FBImporterTest {
 
     @Autowired
     private CurrentUserImporter currentUserImporter;
@@ -31,7 +31,7 @@ public class CurrentUserProfileImporterTests extends BaseFBImporterTests {
     }
 
     @Test
-    public void ProfileImporter_ImportUser_UserIsInKB() throws FBImportException, SharkKBException {
+    public void ProfileImporter_ImportUser_UserTagIsInKB() throws FBImportException, SharkKBException {
         currentUserImporter.performImport();
 
         User user = getTestJSONObject("me", User.class);

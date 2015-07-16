@@ -33,18 +33,17 @@ public class FriendsImporter extends BaseFBImporter {
     @Override
     public void performImport() throws FBImportException, SharkKBException {
 
-        User currentFBUser = getContext().getCurrentFBUser();
         PeerSNSemanticTag currentUser = getContext().getCurrentUserPeerSemanticTag();
         PagedList<Reference> friends = getFacebookAPI().friendOperations().getFriends();
 
         PeerTaxonomy peerTaxonomy = sharkKB.getPeersAsTaxonomy();
-
+        User currentFBUser = getContext().getCurrentFBUser();
         TXSemanticTag facebookUsers = peerTaxonomy.getSemanticTag(FacebookUtil.createFriendsSI(currentFBUser.getId()));
 
 
         for (Reference friendRef : friends) {
             PeerSNSemanticTag friendsSemanticTag = KBUtils.createPeerSNTagFrom(friendRef, getSharkKb());
-            facebookUsers.move(friendsSemanticTag);
+            // facebookUsers.move(friendsSemanticTag);
             KBUtils.connectAsFriends(currentUser, friendsSemanticTag);
         }
 

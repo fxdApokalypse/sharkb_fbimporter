@@ -1,19 +1,18 @@
 package net.sharkfw.apps.fb.importers;
 
-import net.sharkfw.apps.fb.BaseFBImporterTests;
+import net.sharkfw.apps.fb.FBImporterTest;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.util.facebook.FacebookUtil;
 import net.sharkfw.apps.fb.util.shark.KBUtils;
-import net.sharkfw.knowledgeBase.PeerSNSemanticTag;
+import net.sharkfw.apps.fb.util.shark.SemanticTagComparator;
 import net.sharkfw.knowledgeBase.SNSemanticTag;
 import net.sharkfw.knowledgeBase.SharkKBException;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.social.facebook.api.Reference;
-import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.UserOperations;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -23,24 +22,26 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 
 
-public class FriendsImporterTests extends BaseFBImporterTests {
+public class FriendsImporterTests extends FBImporterTest {
 
     @Autowired
     private FriendsImporter friendsImporter;
-    private PeerSNSemanticTag userTag;
 
-    @Before
-    public void setUPTestEnvironment() throws SharkKBException {
-        mockServer.expect(requestTo(getFBUrl("me/friends")))
-            .andExpect(method(HttpMethod.GET))
-            .andRespond(testResponse("friends"));
-
-        userTag = KBUtils.createPeerSNTagFrom(getTestJSONObject("me", User.class), getKB());
-        friendsImporter.getContext().setCurrentUserPeerSemanticTag(userTag);
-    }
+    @Autowired
+    private CurrentUserImporter userImporter;
 
     @Test
     public void FriendsImporterTests_importFriends_AllFriendEdgesAreCreated() throws FBImportException, SharkKBException, IOException {
+
+        mockServer.expect(requestTo(getFBUrl("me", UserOperations.PROFILE_FIELDS)))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(testResponse("me"));
+
+        mockServer.expect(requestTo(getFBUrl("me/friends")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(testResponse("friends"));
+
+        userImporter.performImport();
         friendsImporter.performImport();
 
         int expectedCountOfFriends = getExpectedFriends().size();
@@ -55,6 +56,15 @@ public class FriendsImporterTests extends BaseFBImporterTests {
     @Test
     public void FriendsImporterTests_importFriends_AllFriendNodesAreCreatedAsExpected() throws FBImportException, SharkKBException, IOException {
 
+        mockServer.expect(requestTo(getFBUrl("me", UserOperations.PROFILE_FIELDS)))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(testResponse("me"));
+
+        mockServer.expect(requestTo(getFBUrl("me/friends")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(testResponse("friends"));
+
+        userImporter.performImport();
         friendsImporter.performImport();
 
         List<Reference> expectedFriendsOfHal = getExpectedFriends();
@@ -67,6 +77,7 @@ public class FriendsImporterTests extends BaseFBImporterTests {
     }
 
     private void assertEquals(List<Reference> expectedFriendsOfHal, List<SNSemanticTag> friendSrcEdges) {
+        friendSrcEdges.sort(SemanticTagComparator.createBySIComparator());
         for (int i = 0; i < expectedFriendsOfHal.size(); i++) {
             Reference expectedFriend = expectedFriendsOfHal.get(i);
             SNSemanticTag actualFriendTag = friendSrcEdges.get(i);
@@ -81,10 +92,10 @@ public class FriendsImporterTests extends BaseFBImporterTests {
     }
 
     private List<SNSemanticTag> getFriendshipSrcEdgesFromTestUser() {
-        return Collections.list(userTag.sourceTags(KBUtils.FRIENDSHIP_EDGE));
+        return Collections.list(getImportContext().getCurrentUserPeerSemanticTag().sourceTags(KBUtils.FRIENDSHIP_EDGE));
     }
 
     private List<SNSemanticTag> getFriendshipTgtEdgesFromTestUser() {
-        return Collections.list(userTag.targetTags(KBUtils.FRIENDSHIP_EDGE));
+        return Collections.list(getImportContext().getCurrentUserPeerSemanticTag().targetTags(KBUtils.FRIENDSHIP_EDGE));
     }
 }

@@ -53,11 +53,6 @@
   "locale": "de_DE",
   "name": "Hal Emmerich",
   "name_format": "{first} {last}",
-  "security_settings": {
-    "secure_browsing": {
-      "enabled": true
-    }
-  },
   "test_group": 7,
   "timezone": 2,
   "third_party_id": "CzGUZJYD7PBW7UrWuFlWJ6QLhIw",

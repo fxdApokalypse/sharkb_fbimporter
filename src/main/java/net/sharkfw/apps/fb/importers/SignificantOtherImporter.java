@@ -53,7 +53,7 @@ public class SignificantOtherImporter extends BaseFBImporter {
 
     @Override
     public List<String> getRequiredPermissions() {
-        return Arrays.asList(FBPermissions.USER_RELATIONSHIP_DETAILS, FBPermissions.USER_RELATIONSHIPS);
+        return Arrays.asList(FBPermissions.USER_RELATIONSHIPS);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.core.cache;
 
-import net.sharkfw.apps.fb.BaseFBImporterTests;
+import net.sharkfw.apps.fb.FBImporterTest;
 import org.junit.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 
-public class TestFacebookTemplateRequestCaching extends BaseFBImporterTests {
+public class TestFacebookTemplateRequestCaching extends FBImporterTest {
 
 	@Test
 	public void TemplateFetchObject_requestObjectsMultipleTimes_theObjectIsFetchedOnlyOnceFromTheServer() throws IOException {

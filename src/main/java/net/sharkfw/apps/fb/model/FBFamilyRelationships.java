@@ -53,7 +53,7 @@ public class FBFamilyRelationships {
         DAUGHTER, SON
     );
 
-    public static final String STEP_SIBLING="step_sibling";
+    public static final String STEP_SIBLING="step sibling";
     public static final String SIBLING="sibling";
     public static final String SISTER ="sister";
     public static final String BROTHER ="brother";
@@ -100,7 +100,7 @@ public class FBFamilyRelationships {
 
     }
 
-    private static String reversedRelationShip(String normalizedRelationShip) {
+    static String reversedRelationShip(String normalizedRelationShip) {
         switch (normalizedRelationShip) {
             case CHILD_OF_SIBLING:
                 return SIBLING_OF_PARENT;

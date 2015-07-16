@@ -1,12 +1,12 @@
 package net.sharkfw.apps.fb.util.facebook;
 
-import net.sharkfw.apps.fb.BaseFBImporterTests;
+import net.sharkfw.apps.fb.FBImporterTest;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.social.facebook.api.User;
 import org.springframework.util.StreamUtils;
 
-public class TestFBObjectSerialize extends BaseFBImporterTests {
+public class TestFBObjectSerialize extends FBImporterTest {
 
     @Test
     public void ObjectSerialize_serializeObject_objectIsSerializedAsExpected() throws FBSerializeException, Exception {

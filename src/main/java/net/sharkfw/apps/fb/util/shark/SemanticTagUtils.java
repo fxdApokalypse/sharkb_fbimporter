@@ -81,7 +81,6 @@ public class SemanticTagUtils {
 
     public static SpatialSemanticTag createSpatialSemanticTag(Location location, SharkKB kb) throws SharkKBException {
 
-        // TODO: implement this geometry properly when i receive the wisdom of the magic WKT, EWKT and SRS.
         SharkGeometry geometry = InMemoSharkGeometry.createGeomByEWKT(String.format("POINT(%f, %f)", location.getLatitude(), location.getLongitude()));
         SpatialSemanticTag ssTag = kb.getSpatialSTSet().createSpatialSemanticTag(location.getName(), new String[]{FacebookUtil.createUserLink(location.getId())}, geometry);
         fillStringProperties(ssTag, location);
