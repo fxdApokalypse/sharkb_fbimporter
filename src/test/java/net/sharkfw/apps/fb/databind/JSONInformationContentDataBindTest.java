@@ -19,8 +19,8 @@ public class JSONInformationContentDataBindTest extends BaseTest {
 	public void serializeAndDeserializeAString() throws SharkKBException, IOException {
 		ContextPoint cp = ContextCoordinatesBuilder.create(getKB()).createContextPoint();
 		Information info = null;
-		JsonInformationContentDeserializer<String> deserializer = new JsonInformationContentDeserializer<>();
-		JsonInformationContentSerializer<String> serializer = new JsonInformationContentSerializer<>();
+		JsonInformationContentDeserializer deserializer = new JsonInformationContentDeserializer();
+		JsonInformationContentSerializer serializer = new JsonInformationContentSerializer();
 
 		String testData = "Du Du Du DU DU";
 		String actual = null;
@@ -43,8 +43,8 @@ public class JSONInformationContentDataBindTest extends BaseTest {
 	public void serializeAndDeserializeAList() throws SharkKBException, IOException {
 		ContextPoint cp = ContextCoordinatesBuilder.create(getKB()).createContextPoint();
 		Information info = null;
-		JsonInformationContentDeserializer<String> deserializer = new JsonInformationContentDeserializer<>();
-		JsonInformationContentSerializer<String> serializer = new JsonInformationContentSerializer<>();
+		JsonInformationContentDeserializer deserializer = new JsonInformationContentDeserializer();
+		JsonInformationContentSerializer serializer = new JsonInformationContentSerializer();
 
 		List<String> testData = Arrays.asList("Blu", "Blu");
 		List<String> actual = null;

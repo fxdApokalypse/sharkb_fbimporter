@@ -25,10 +25,10 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 public class FriendsImporterTests extends FBImporterTest {
 
     @Autowired
-    private FriendsImporter friendsImporter;
+    private FriendsImporterStep friendsImporter;
 
     @Autowired
-    private CurrentUserImporter userImporter;
+    private CurrentUserImporterStep userImporter;
 
     @Test
     public void FriendsImporterTests_importFriends_AllFriendEdgesAreCreated() throws FBImportException, SharkKBException, IOException {

@@ -13,7 +13,7 @@ import org.springframework.core.env.Environment;
  * @see http://docs.spring.io/spring-framework/docs/4.0.4.RELEASE/javadoc-api/org/springframework/context/annotation/Configuration.html
  */
 @Configuration
-@ComponentScan(basePackages = "net.sharkfw.apps.fb.importers")
+@ComponentScan(basePackages = {"net.sharkfw.apps.fb.core","net.sharkfw.apps.fb.importers"})
 @PropertySource(value = "file:${user.dir}/conf/conf.properties")
 @Import(KnowledgeBaseConfig.class)
 public class AppConfig {

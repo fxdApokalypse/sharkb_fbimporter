@@ -21,7 +21,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 public class CurrentUserProfileImporterTests extends FBImporterTest {
 
     @Autowired
-    private CurrentUserImporter currentUserImporter;
+    private CurrentUserImporterStep currentUserImporter;
 
     @Before
     public void setUpMockServer() {

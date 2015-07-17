@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.util.StopWatch;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
 @Component
-public class JsonInformationContentSerializer<T> implements InformationContentSerializer<T> {
+public class JsonInformationContentSerializer implements InformationContentSerializer {
 
 	private Logger LOG = LoggerFactory.getLogger(JsonInformationContentSerializer.class);
 
@@ -29,13 +31,14 @@ public class JsonInformationContentSerializer<T> implements InformationContentSe
 	}
 
 	@Override
-	public void serialize(T object, Information information) throws IOException, SharkKBException {
+	public <T> void serialize(T object, Information information) throws IOException, SharkKBException {
 		byte[] bytes = objectMapper.writeValueAsBytes(object);
 		_serialize(object, information, bytes);
+
 	}
 
 	@Override
-	public void serialize(List<T> object, Information information) throws IOException, SharkKBException {
+	public  <T> void serialize(List<T> object, Information information) throws IOException, SharkKBException {
 		byte[] bytes = objectMapper.writeValueAsBytes(object);
 		information.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		information.setContent(bytes);
@@ -43,13 +46,18 @@ public class JsonInformationContentSerializer<T> implements InformationContentSe
 	}
 
 	@Override
-	public boolean canSerialize(T object) {
+	public <T> boolean canSerialize(T object) {
+		if (object == null) return false;
 		return objectMapper.canSerialize(object.getClass());
 	}
 
-	private void _serialize(T object, Information information, byte[] bytes) throws SharkKBException {
+	private <T> void _serialize(T object, Information information, byte[] bytes) throws SharkKBException {
 		information.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+		StopWatch s1 = new StopWatch();
+		s1.start();
 		information.setContent(bytes);
+		s1.stop();
+		System.out.println("Write to Information " + s1.getLastTaskTimeMillis());
 		information.setProperty(TYPE_PROPERTY, object.getClass().getName());
 	}
 }

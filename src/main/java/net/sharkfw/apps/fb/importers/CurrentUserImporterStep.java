@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.importers;
 
-import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
+import net.sharkfw.apps.fb.core.importer.BaseFBImporterStep;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.facebook.FacebookContextCoordinateBuilder;
@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.UserOperations;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeTypeUtils;
-import org.springframework.util.ReflectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,9 +20,9 @@ import java.util.List;
  * Imports the user related to the specified authorized access token.
  */
 @Component
-public class CurrentUserImporter extends BaseFBImporter {
+public class CurrentUserImporterStep extends BaseFBImporterStep {
 
-    private Logger LOG = LoggerFactory.getLogger(CurrentUserImporter.class);
+    private Logger LOG = LoggerFactory.getLogger(CurrentUserImporterStep.class);
 
     public void performImport() throws FBImportException {
         PeerSNSemanticTag userTag = null;

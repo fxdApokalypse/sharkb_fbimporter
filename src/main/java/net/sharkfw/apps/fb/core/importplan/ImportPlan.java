@@ -1,7 +1,7 @@
-package net.sharkfw.apps.fb.core.importer.plan;
+package net.sharkfw.apps.fb.core.importplan;
 
 import net.sharkfw.apps.fb.core.importer.FBImportException;
-import net.sharkfw.apps.fb.core.importer.FBImporter;
+import net.sharkfw.apps.fb.core.importer.FBImporterStep;
 import net.sharkfw.knowledgeBase.SharkKBException;
 
 /**
@@ -12,7 +12,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
  * <p>In simpler terms a Import Plan defines which importers should be used and in which order.</p>
  *
  */
-public interface ImportPlan  {
+public interface    ImportPlan  {
 
     /**
      * <p>
@@ -38,28 +38,28 @@ public interface ImportPlan  {
     void execute(String importerName) throws FBImportException;
 
     /**
-     * Adds a importer to this import plan.
+     * Adds a importer to this import importplan.
      * NOTE: If you add a importer of the same type twice
      * the implementation will replace the old one with the new one.
      *
-     * @param importer the importer which should be added to this import plan.
+     * @param importer the importer which should be added to this import importplan.
      */
-    void add(FBImporter importer);
+    void add(FBImporterStep importer);
 
     /**
-     * Removes a importer from this import plan.
+     * Removes a importer from this import importplan.
      *
-     * @param importer the importer which should be removed from this import plan.
+     * @param importer the importer which should be removed from this import importplan.
      */
-    void remove(FBImporter importer);
+    void remove(FBImporterStep importer);
 
 
     /**
-     * Check if this import plan contains a specific importer.
+     * Check if this import importplan contains a specific importer.
      *
      * @param importer the specific importer
-     * @return true if the importer is already in this import plan.
+     * @return true if the importer is already in this import importplan.
      */
-    boolean hasImporter(FBImporter importer);
+    boolean hasImporter(FBImporterStep importer);
 
 }

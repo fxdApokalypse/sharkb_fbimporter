@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.importers;
 
-import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
+import net.sharkfw.apps.fb.core.importer.BaseFBImporterStep;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.shark.KBUtils;
@@ -20,9 +20,9 @@ import java.util.List;
  * user peer semantic tag if it isn't already in the underlying SharkKB
  */
 @Component
-public class SignificantOtherImporter extends BaseFBImporter {
+public class SignificantOtherImporterStep extends BaseFBImporterStep {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SignificantOtherImporter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SignificantOtherImporterStep.class);
 
     /**
      * The predicate name which is used to describe the relationship
@@ -58,6 +58,6 @@ public class SignificantOtherImporter extends BaseFBImporter {
 
     @Override
     public List<String> getDependentImporters() {
-        return Arrays.asList(CurrentUserImporter.class.getName());
+        return Arrays.asList(CurrentUserImporterStep.class.getName());
     }
 }

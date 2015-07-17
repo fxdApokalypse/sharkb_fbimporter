@@ -80,7 +80,7 @@ public class FBUser extends ContextPointMapper implements Serializable {
 	}
 
 	public List<String> getMeetingFor() {
-		return readInformationList(MEETING_FOR, MimeTypeUtils.TEXT_PLAIN, String.class);
+		return readInformationList(MEETING_FOR, MimeTypeUtils.TEXT_PLAIN_VALUE, String.class);
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class FBUser extends ContextPointMapper implements Serializable {
 	}
 
 	public List<String> getInterestedIn() {
-		return readInformationList(INTERESTED_IN, MimeTypeUtils.TEXT_PLAIN, String.class);
+		return readInformationList(INTERESTED_IN, MimeTypeUtils.TEXT_PLAIN_VALUE, String.class);
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class FBUser extends ContextPointMapper implements Serializable {
 	 * @return a list of {@link Reference} to people the user is inspired by, if available.
 	 */
 	public List<Reference> getInspirationalPeople() {
-		return readInformationList(INSPIRATIONAL_PEOPLE, MimeTypeUtils.TEXT_PLAIN, Reference.class);
+		return readInformationList(INSPIRATIONAL_PEOPLE, MimeTypeUtils.TEXT_PLAIN_VALUE, Reference.class);
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class FBUser extends ContextPointMapper implements Serializable {
 	 * @return a list of {@link Reference} to languages the user knows, if available.
 	 */
 	public List<Reference> getLanguages() {
-		return readInformationList(LANGUAGE, MimeTypeUtils.TEXT_PLAIN, Reference.class);
+		return readInformationList(LANGUAGE, MimeTypeUtils.TEXT_PLAIN_VALUE, Reference.class);
 	}
 
 	/**

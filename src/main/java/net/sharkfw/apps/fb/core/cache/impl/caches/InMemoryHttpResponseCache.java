@@ -22,7 +22,7 @@ import java.util.Map;
  *     the fastest.
  * </p>
  */
-@Component("InMemoryCache")
+// @Component("InMemoryCache")
 public class InMemoryHttpResponseCache implements HttpRequestCache {
 
 	protected Map<String, ClientHttpResponse> cachedEntries;

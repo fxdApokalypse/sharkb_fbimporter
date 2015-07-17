@@ -9,6 +9,7 @@ public class ReflectionFilters {
     private static final String GETTER_PREFIX = "get";
     public static final ReflectionUtils.FieldFilter IS_NOT_PUBLIC_STATIC_FINAL = Not(ReflectionUtils::isPublicStaticFinal);
 
+
     public static ReflectionUtils.FieldFilter Not(ReflectionUtils.FieldFilter filter) {
         return (field) -> {
             return !filter.matches(field);
@@ -106,6 +107,7 @@ public class ReflectionFilters {
 
     public static ReflectionUtils.MethodFilter methodReturnType(Class type) {
         return (Method method) -> {
+            if (type == null) return  true;
             return method.getReturnType().equals(type);
         };
     }
@@ -118,5 +120,6 @@ public class ReflectionFilters {
             methodReturnType(type)
         );
     }
+
 
 }

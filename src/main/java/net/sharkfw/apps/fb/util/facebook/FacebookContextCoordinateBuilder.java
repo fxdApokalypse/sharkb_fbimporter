@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.util.facebook;
 
-import net.sharkfw.apps.fb.core.importer.FBImporter;
+import net.sharkfw.apps.fb.core.importer.FBImporterStep;
 import net.sharkfw.apps.fb.util.shark.ContextCoordinatesBuilder;
 import net.sharkfw.apps.fb.util.shark.SemanticTagUtils;
 import net.sharkfw.knowledgeBase.*;
@@ -14,25 +14,29 @@ import java.util.Date;
 
 public class FacebookContextCoordinateBuilder extends ContextCoordinatesBuilder {
 
-    public static FacebookContextCoordinateBuilder create(FBImporter importer) {
+    public static FacebookContextCoordinateBuilder create(FBImporterStep importer) {
         return new FacebookContextCoordinateBuilder(importer);
     }
     public static final Logger LOG = LoggerFactory.getLogger(FacebookContextCoordinateBuilder.class);
 
-    private FBImporter importer;
+    private FBImporterStep importer;
 
-    public FacebookContextCoordinateBuilder(FBImporter importer) {
+    public FacebookContextCoordinateBuilder(FBImporterStep importer) {
         super(importer.getSharkKb());
         this.importer = importer;
     }
 
     public FacebookContextCoordinateBuilder location(Page locationPage) throws SharkKBException {
-        location(SemanticTagUtils.createSpatialSemanticTag(locationPage.getLocation(), sharkKB));
+        if (locationPage != null) {
+            location(SemanticTagUtils.createSpatialSemanticTag(locationPage.getLocation(), sharkKB));
+        }
         return this;
     }
 
     public FacebookContextCoordinateBuilder location(Location location) throws SharkKBException {
-        location(SemanticTagUtils.createSpatialSemanticTag(location, sharkKB));
+        if (location != null) {
+            location(SemanticTagUtils.createSpatialSemanticTag(location, sharkKB));
+        }
         return this;
     }
 

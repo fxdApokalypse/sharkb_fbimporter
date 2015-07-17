@@ -6,7 +6,7 @@ import org.springframework.social.facebook.api.Facebook;
 
 import java.util.List;
 
-public interface FBImporter {
+public interface FBImporterStep {
 
     /**
      * Writes Data from the Facebook API
@@ -43,8 +43,8 @@ public interface FBImporter {
 
 
     /**
-     * Retrieve a list of dependent importers which must
-     * have already runned before this importers could be performed.
+     * Retrieve a list of dependent importer steps. which must
+     * have already finished before this importers could be performed.
      *
      * @return the list of dependent importers.
      */
@@ -53,10 +53,10 @@ public interface FBImporter {
     /**
      * <p>Retrieve the import context.</p>
      *
-     * <p>The Important context is shared between multiple importers in order to share
-     * information between importers.
+     * <p>The Importer context is shared between multiple importer steps in order to share
+     * information between importer steps.
      * E.g. so it is possible to reuse the already retrieved user profile or
-     * the user peer by other importers.
+     * the user peer by other importer steps.
      * </p>
      *
      *
@@ -65,7 +65,7 @@ public interface FBImporter {
     ImporterContext getContext();
 
     /**
-     * Return the unique name of this importers.
+     * Return the unique name of this importer step.
      *
      * @return the name of this importers.
      */

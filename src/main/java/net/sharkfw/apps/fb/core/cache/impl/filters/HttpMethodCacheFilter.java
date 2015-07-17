@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
  * Created by fxdapokalypse on 11.07.2015.
  */
 
-@Component
 public class HttpMethodCacheFilter implements HttpRequestCacheFilter {
 
 	private HttpMethod httpMethod;

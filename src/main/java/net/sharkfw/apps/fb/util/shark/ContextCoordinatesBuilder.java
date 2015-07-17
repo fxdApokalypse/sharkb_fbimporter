@@ -88,6 +88,12 @@ public class ContextCoordinatesBuilder {
     }
 
     public ContextPoint createContextPoint() throws SharkKBException {
-        return sharkKB.createContextPoint(build());
+        ContextCoordinates cc = build();
+        ContextPoint cp = sharkKB.getContextPoint(cc);
+        if (cp == null) {
+            cp = sharkKB.createContextPoint(cc);
+        }
+
+        return cp;
     };
 }

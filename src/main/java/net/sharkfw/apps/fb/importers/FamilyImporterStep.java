@@ -1,6 +1,6 @@
 package net.sharkfw.apps.fb.importers;
 
-import net.sharkfw.apps.fb.core.importer.BaseFBImporter;
+import net.sharkfw.apps.fb.core.importer.BaseFBImporterStep;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.model.FBFamilyRelationships;
 import net.sharkfw.apps.fb.model.FBPermissions;
@@ -25,9 +25,9 @@ import java.util.List;
  * </p>
  */
 @Component
-public class FamilyImporter extends BaseFBImporter {
+public class FamilyImporterStep extends BaseFBImporterStep {
 
-    private Logger LOG = LoggerFactory.getLogger(FamilyImporter.class);
+    private Logger LOG = LoggerFactory.getLogger(FamilyImporterStep.class);
 
     @Override
     public void performImport() throws FBImportException, SharkKBException {
@@ -60,6 +60,6 @@ public class FamilyImporter extends BaseFBImporter {
 
     @Override
     public List<String> getDependentImporters() {
-        return Arrays.asList(CurrentUserImporter.class.getName());
+        return Arrays.asList(CurrentUserImporterStep.class.getName());
     }
 }

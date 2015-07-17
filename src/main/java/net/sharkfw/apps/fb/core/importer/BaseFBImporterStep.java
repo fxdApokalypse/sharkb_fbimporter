@@ -5,11 +5,13 @@ import net.sharkfw.knowledgeBase.SharkKB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class BaseFBImporter implements FBImporter {
+@Component
+public abstract class BaseFBImporterStep implements FBImporterStep {
 
     @Autowired
     protected FacebookServiceProvider serviceProvider;
