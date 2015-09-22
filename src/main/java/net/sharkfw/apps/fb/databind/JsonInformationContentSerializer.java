@@ -53,11 +53,7 @@ public class JsonInformationContentSerializer implements InformationContentSeria
 
 	private <T> void _serialize(T object, Information information, byte[] bytes) throws SharkKBException {
 		information.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-		StopWatch s1 = new StopWatch();
-		s1.start();
 		information.setContent(bytes);
-		s1.stop();
-		System.out.println("Write to Information " + s1.getLastTaskTimeMillis());
 		information.setProperty(TYPE_PROPERTY, object.getClass().getName());
 	}
 }
