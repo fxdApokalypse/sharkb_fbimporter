@@ -1,9 +1,15 @@
 package net.sharkfw.apps.fb;
 
 import net.sharkfw.apps.fb.conf.AppConfig;
+import net.sharkfw.apps.fb.conf.ConfigurationException;
 import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.core.importplan.ImportPlan;
 import net.sharkfw.apps.fb.core.importplan.PermissionAwareImportPlan;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -74,6 +80,7 @@ public class Bootstrap {
      * @throws FBImportException if a import error occurred
      */
     public void run() throws FBImportException {
+        setupLogLevel();
         ImportPlan importPlan = ctx.getBean(PermissionAwareImportPlan.class);
         try {
            importPlan.execute();
@@ -85,6 +92,27 @@ public class Bootstrap {
             }
         } finally {
             ctx.destroy();
+        }
+    }
+
+    private  void setupLogLevel() {
+        String logLevel = ctx.getEnvironment().getProperty("log.level");
+
+        /* If the log.level properties is missing fallback to the default
+           log level which is specified inside the classpath:/resources/log4j2.xml
+           config file.
+         */
+        if ( logLevel != null ) {
+            LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+            Configuration config = ctx.getConfiguration();
+
+            LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
+            Level level = Level.getLevel(logLevel.toUpperCase());
+            if (level == null) {
+                throw new ConfigurationException("Invalid configuration log.level = " + logLevel + " isn't a valid log level");
+            }
+            loggerConfig.setLevel(level);
+            ctx.updateLoggers();
         }
     }
 

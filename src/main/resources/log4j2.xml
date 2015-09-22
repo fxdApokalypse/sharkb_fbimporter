@@ -2,15 +2,19 @@
 <Configuration status="warn">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%-5level %logger{36} - %msg%n"/>
         </Console>
+        <File name="File" fileName="logs/import-${date:yyyy-MM-dd HH:mm:ss}.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <Logger name="net.sharkfw.apps.fb" level="info" additivity="false">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="Console"/>
+        <Root level="info">
+            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

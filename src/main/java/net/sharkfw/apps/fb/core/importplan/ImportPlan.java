@@ -12,7 +12,7 @@ import net.sharkfw.knowledgeBase.SharkKBException;
  * <p>In simpler terms a Import Plan defines which importers should be used and in which order.</p>
  *
  */
-public interface    ImportPlan  {
+public interface ImportPlan  {
 
     /**
      * <p>
