@@ -89,7 +89,6 @@ public class Bootstrap {
         } catch(Exception ex) {
             if (ex instanceof RejectedAuthorizationException || ex instanceof ResourceNotFoundException) {
                 LOG.error(ex.getMessage() + ": Please update your access token inside the conf/conf.properties file.");
-                System.out.println(FacebookLogin.invokeLogin());
 
             } else {
                 ex.printStackTrace();

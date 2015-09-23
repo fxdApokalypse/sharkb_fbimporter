@@ -46,6 +46,7 @@ public class CurrentUserImporterStep extends BaseFBImporterStep {
                 .direction(ContextCoordinatesBuilder.Direction.DIRECTION_OUT)
                 .build();
 
+
             ContextPoint cp = sharkKB.getContextPoint(cc);
 
         } catch (SharkKBException e) {

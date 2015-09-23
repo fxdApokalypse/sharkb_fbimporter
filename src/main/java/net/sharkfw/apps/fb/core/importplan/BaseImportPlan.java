@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Base import plan which builds a execution plan for
@@ -35,7 +36,7 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
     /**
      * A set of required permission which are necessary in order to execute this import plan.
      */
-    private Set<String> requiredPermissions = null;
+    protected Set<String> requiredPermissions = null;
 
     /**
      * Placeholder for the import plan entries
@@ -53,6 +54,11 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
     private ApplicationContext ctx;
 
     /**
+     * The retrieved importers.
+     */
+    private List<FBImporterStep> retrievedImportSteps;
+
+    /**
      * Creates an empty ImportPlan.
      */
     public BaseImportPlan() {
@@ -67,6 +73,16 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
         stopWatch.start();
 
         LOG.info("Building the execution plan - creates DAG of import steps");
+
+        retrievedImportSteps = ctx.getBeansOfType(FBImporterStep.class)
+            .entrySet()
+            .stream()
+            .map((bean) -> {
+                FBImporterStep importerStep = bean.getValue();
+                requiredPermissions.addAll(importerStep.getRequiredPermissions());
+                return  importerStep;
+            }).collect(Collectors.toList());
+
         retrieveImportSteps();
         buildExecutionDAGPlan();
 
@@ -126,14 +142,7 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
 
     protected void retrieveImportSteps() {
         this.importers.clear();
-        ctx.getBeansOfType(FBImporterStep.class)
-            .entrySet()
-            .stream()
-            .map((bean) -> {
-                FBImporterStep importerStep = bean.getValue();
-                requiredPermissions.addAll(importerStep.getRequiredPermissions());
-                return  importerStep;
-            })
+        retrievedImportSteps.stream()
             .filter(this::includeImporter)
             .forEach(this::add);
     }

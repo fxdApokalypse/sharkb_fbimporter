@@ -23,4 +23,11 @@ public interface FacebookServiceProvider extends ServiceProvider<Facebook> {
      * @return the name of the app.
      */
     String getAppNamespace();
+
+    /**
+     * Updates the underlying access token
+     * in order to renew the access token.
+     * @param accessToken
+     */
+    void update(String accessToken);
 }

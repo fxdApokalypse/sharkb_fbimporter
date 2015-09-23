@@ -7,7 +7,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import net.sharkfw.apps.fb.conf.AppConfig;
 import net.sharkfw.apps.fb.conf.ConfigurationException;
-import net.sharkfw.apps.fb.model.FBPermissions;
 import net.sharkfw.apps.fb.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ import java.util.stream.Stream;
 
 public class FacebookLogin extends Application {
 
-    public static final String SCOPE_DELIMITER = ":";
+    public static final String SCOPE_DELIMITER = ",";
 
     public static class FacebookLoginResponse {
         private String accessToken;
@@ -37,6 +36,11 @@ public class FacebookLogin extends Application {
         private String errorDescription;
 
         public FacebookLoginResponse(String loginResponseFragment) {
+            if (loginResponseFragment == null) {
+                this.accessToken = "";
+                LOG.error("Login failed fall back to the configured access token");
+            }
+
             Map<String, String> params = StringUtils.parseFragment(loginResponseFragment);
 
             this.accessToken = params.get(PARAM_ACCESS_TOKEN);
@@ -61,7 +65,7 @@ public class FacebookLogin extends Application {
             return errorDescription;
         }
 
-        boolean isFailed() {
+        public boolean isFailed() {
             return getError() != null;
         }
 
@@ -124,8 +128,8 @@ public class FacebookLogin extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        requiredPermissions = new HashSet<>();
 
+        requiredPermissions = new HashSet<>();
         ctx = new AnnotationConfigApplicationContext();
         ctx.register(AppConfig.class);
         ctx.registerShutdownHook();
@@ -137,9 +141,6 @@ public class FacebookLogin extends Application {
         if (facebookAppId == null) {
             throw new ConfigurationException("Missing the required " + AppConfig.FACEBOOK_APP_ID );
         }
-
-        requiredPermissions.add(FBPermissions.USER_FRIENDS);
-        requiredPermissions.add(FBPermissions.USER_LIKES);
 
         URI loginURI = buildFBLoginURL();
         WebView webView = new WebView();
@@ -209,7 +210,7 @@ public class FacebookLogin extends Application {
         Runnable printHelp = () -> {
             StringBuilder str = new StringBuilder();
             str.append("Purpose: Obtains a access token from facebook user for a specified facebook app.").append(StringUtils.NEWLINE);
-            str.append("Usage: fblogin [OPTION...]").append(StringUtils.NEWLINE);
+            str.append("Usage: login [OPTION...]").append(StringUtils.NEWLINE);
             str.append(StringUtils.NEWLINE);
             String
                 scopeParam = String.join(", ", ARG_REQUIRED_SCOPE_SHORT, ARG_REQUIRED_SCOPE );
@@ -238,6 +239,11 @@ public class FacebookLogin extends Application {
             System.out.println(str.toString());
         };
 
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("parse argument arguments");
+            LOG.debug("ARGS: " + String.join(" ",getParameters().getRaw()));
+        }
+
         List<String> args =  getParameters().getRaw();
         for (int i = 0; i < args.size(); i++) {
 
@@ -245,19 +251,28 @@ public class FacebookLogin extends Application {
                 case ARG_REQUIRED_SCOPE_SHORT:
                 case ARG_REQUIRED_SCOPE:
                     if (i + 1 < args.size() ) {
-                        List<String> requiredPermissions = Arrays.asList(args.get(i).split(SCOPE_DELIMITER));
+                        List<String> requiredPermissions = Arrays.asList(args.get(i + 1).split(SCOPE_DELIMITER));
                         this.requiredPermissions.addAll(requiredPermissions);
                     }
                     break;
                 case ARG_APP_ID_SHORT:
                 case ARG_APP_ID:
                     if (i + 1 < args.size() ) {
-                       this.facebookAppId = args.get(i);
+                       this.facebookAppId = args.get(i + 1);
                     }
                     break;
                 case ARG_SAVE_APP_ID:
                     saveNewAccessToken = true;
             }
+        }
+
+        if (LOG.isDebugEnabled()) {
+            this.requiredPermissions.forEach((scope) -> {
+                LOG.debug("requested scope: " + scope);
+            });
+
+            LOG.debug("FacebookAppID = " + this.facebookAppId);
+            LOG.debug("saveNewAccessToken = " + this.saveNewAccessToken);
         }
 
         if ( this.facebookAppId == null || this.facebookAppId == "" ) {
@@ -278,23 +293,23 @@ public class FacebookLogin extends Application {
         loginParams.add("client_id=" + facebookAppId);
         loginParams.add("redirect_uri=" + REDIRECT_URL);
         loginParams.add("response_type=token");
-
         if (requiredPermissions != null) {
             String scope = String.join(",", requiredPermissions);
             loginParams.add(PARAM_SCOPE + "=" +scope);
         }
+
         return URI.create(FB_LOGIN_URL + "?" + String.join("&", loginParams));
     }
 
     public static FacebookLoginResponse invokeLogin(String ...scope) {
-
+        LOG.info("Start facebook login dialog");
         String loginResponse = null;
         URL[] classpathURLs =((URLClassLoader) (Thread.currentThread().getContextClassLoader())).getURLs();
         String classpath  = Stream.of(classpathURLs).map(Object::toString).collect(Collectors.joining(":"));
         String command = "java -cp " + classpath + " " + FacebookLogin.class.getName();
 
         if (scope.length > 0) {
-            command += " " + String.join(SCOPE_DELIMITER, scope);
+            command += " --scope " + String.join(SCOPE_DELIMITER, scope);
         }
 
         try {
@@ -312,5 +327,9 @@ public class FacebookLogin extends Application {
 
         FacebookLoginResponse flp = new FacebookLoginResponse(loginResponse);
         return flp;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

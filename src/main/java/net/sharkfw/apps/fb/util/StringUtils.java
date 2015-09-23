@@ -22,6 +22,6 @@ public class StringUtils {
         Stream<String> fragmentStream = Stream.of(fragment.split("&"));
         return fragmentStream
             .map((param) -> param.split("="))
-            .collect(Collectors.toMap(param -> param[0], param -> param[1]));
+            .collect(Collectors.toMap(param -> param[0], param -> param.length >= 1 ? param[1] : ""));
     }
 }
