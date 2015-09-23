@@ -14,7 +14,7 @@ import org.springframework.core.env.Environment;
  */
 @Configuration
 @ComponentScan(basePackages = {"net.sharkfw.apps.fb.core","net.sharkfw.apps.fb.importers"})
-@PropertySource(value = "file:${user.dir}/conf/conf.properties")
+@PropertySource( name="conf",  value = "file:${user.dir}/conf/conf.properties")
 @Import(KnowledgeBaseConfig.class)
 public class AppConfig {
 
@@ -27,6 +27,12 @@ public class AppConfig {
 	 * A property which defines the name of the underlying facebook app.
 	 */
 	public static final String FACEBOOK_APP_NAMESPACE_PROPERTY = "facebook.appNamespace";
+
+	/**
+	 * A property which defines the appID of the underlying facebook app.
+	 */
+	public static final String FACEBOOK_APP_ID= "facebook.appId";
+
 
 	@Autowired
 	Environment env;

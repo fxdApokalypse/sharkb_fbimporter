@@ -1,17 +1,12 @@
 package net.sharkfw.apps.fb.databind;
 
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import net.sharkfw.knowledgeBase.ContextPoint;
 import net.sharkfw.knowledgeBase.Information;
 import net.sharkfw.knowledgeBase.SharkKBException;
-import net.sharkfw.knowledgeBase.inmemory.InMemoInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.util.StopWatch;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;

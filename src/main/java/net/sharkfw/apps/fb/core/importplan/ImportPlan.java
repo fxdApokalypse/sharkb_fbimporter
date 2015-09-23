@@ -4,6 +4,9 @@ import net.sharkfw.apps.fb.core.importer.FBImportException;
 import net.sharkfw.apps.fb.core.importer.FBImporterStep;
 import net.sharkfw.knowledgeBase.SharkKBException;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * <p>A ImportPlan provides a collection
  * of importers which are executed by a ImportPlan
@@ -62,4 +65,11 @@ public interface ImportPlan  {
      */
     boolean hasImporter(FBImporterStep importer);
 
+    /**
+     * Retruns a set of permissions which are required
+     * in order to execute this import plan completely.
+     *
+     * @return the required permissions;
+     */
+    Set<String> getRequiredPermissions();
 }

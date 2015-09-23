@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.social.RejectedAuthorizationException;
+import org.springframework.social.ResourceNotFoundException;
+
 
 /**
  * Main entry point for the facebook importer.
@@ -85,8 +87,10 @@ public class Bootstrap {
         try {
            importPlan.execute();
         } catch(Exception ex) {
-            if (ex instanceof RejectedAuthorizationException) {
+            if (ex instanceof RejectedAuthorizationException || ex instanceof ResourceNotFoundException) {
                 LOG.error(ex.getMessage() + ": Please update your access token inside the conf/conf.properties file.");
+                System.out.println(FacebookLogin.invokeLogin());
+
             } else {
                 ex.printStackTrace();
             }

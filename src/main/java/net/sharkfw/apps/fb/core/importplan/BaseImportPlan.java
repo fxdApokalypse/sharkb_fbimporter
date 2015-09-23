@@ -33,6 +33,11 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
     protected static final Logger LOG = LoggerFactory.getLogger(BaseImportPlan.class);
 
     /**
+     * A set of required permission which are necessary in order to execute this import plan.
+     */
+    private Set<String> requiredPermissions = null;
+
+    /**
      * Placeholder for the import plan entries
      */
     private Map<String, ImportPlanEntry> importers = null;
@@ -52,6 +57,7 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
      */
     public BaseImportPlan() {
         importers = new HashMap<>();
+        requiredPermissions = new HashSet<>();
     }
 
     @Override
@@ -123,7 +129,11 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
         ctx.getBeansOfType(FBImporterStep.class)
             .entrySet()
             .stream()
-            .map(Map.Entry::getValue)
+            .map((bean) -> {
+                FBImporterStep importerStep = bean.getValue();
+                requiredPermissions.addAll(importerStep.getRequiredPermissions());
+                return  importerStep;
+            })
             .filter(this::includeImporter)
             .forEach(this::add);
     }
@@ -145,6 +155,11 @@ public class BaseImportPlan implements ImportPlan, ApplicationContextAware {
     @Override
     public boolean hasImporter(FBImporterStep importer) {
         return this.importers.containsKey(importer.getName());
+    }
+
+    @Override
+    public Set<String> getRequiredPermissions() {
+        return new HashSet<>(requiredPermissions);
     }
 
     @Override
