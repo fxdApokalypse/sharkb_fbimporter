@@ -1,0 +1,66 @@
+{
+  "id": "11111111",
+  "age_range": {
+    "min": 21
+  },
+  "currency": {
+    "currency_offset": 100,
+    "usd_exchange": 1.0,
+    "usd_exchange_inverse": 1.0,
+    "user_currency": "EUR"
+  },
+  "devices": [
+    {
+      "os": "Android"
+    }
+  ],
+  "email": "sagIchDirNicht@MegaMail.com",
+  "favorite_athletes": [
+    {
+      "id": "267781246577236",
+      "name": "Aaron Fotheringham"
+    }
+  ],
+  "first_name": "Hal",
+  "gender": "male",
+  "installed": true,
+  "install_type": "UNKNOWN",
+  "is_verified": false,
+  "languages": [
+    {
+      "id": "107825489240781",
+      "name": "Englisch"
+    },
+    {
+      "id": "104254052943349",
+      "name": "Deutsch"
+    },
+    {
+      "id": "107771382578708",
+      "name": "Russisch"
+    },
+    {
+      "id": "105106782859125",
+      "name": "Upper Saxon German"
+    },
+    {
+      "id": "216607121738831",
+      "name": "Mansfeldisch"
+    }
+  ],
+  "last_name": "Emmerich",
+  "link": "https://www.facebook.com/app_scoped_user_id/11111111/",
+  "locale": "de_DE",
+  "name": "Hal Emmerich",
+  "name_format": "{first} {last}",
+  "test_group": 7,
+  "timezone": 2,
+  "third_party_id": "CzGUZJYD7PBW7UrWuFlWJ6QLhIw",
+  "updated_time": "2015-06-12T08:17:20+0000",
+  "verified": true,
+  "video_upload_limits": {
+    "length": 2700,
+    "size": 1879048192
+  },
+  "viewer_can_send_gift": false
+}

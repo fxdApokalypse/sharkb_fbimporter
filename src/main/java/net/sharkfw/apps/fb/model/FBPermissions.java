@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FBPermissions {
 
@@ -368,6 +369,23 @@ public class FBPermissions {
         return permissions;
     }
 
+
+    /**
+     * Creates a FBPermissions object from a list of Strings which describes facebook permissions.
+     *
+     * @param permissionList the list of FBPermission objects.
+     *
+     * @return the new created FBPermissions object.
+     */
+    public static FBPermissions fromStringList(List<String> permissionList) {
+        FBPermissions permissions = new FBPermissions();
+
+        permissionList.forEach((permission -> {
+            permissions.permissions.put(permission, new Permission(permission, "granted"));
+        }));
+        return permissions;
+    }
+
     protected Map<String, Permission> permissions = null;
 
     /**
@@ -383,8 +401,28 @@ public class FBPermissions {
      * @param permissions the name of permission.
      * @return true if all given permissions are granted by the owner.
      */
-    boolean hasGranted(String ...permissions) {
-        return Arrays.asList(permissions).stream().allMatch((permission) -> hasGranted(permission));
+    public boolean hasGranted(String ...permissions) {
+        return hasGranted(Arrays.asList(permissions));
+    }
+
+    /**
+     * Check if a given list of permission were granted by the owner.
+     *
+     * @param permissions the name of permission.
+     * @return true if all given permissions are granted by the owner.
+     */
+    public boolean hasGranted(List<String> permissions) {
+        return permissions.stream().allMatch((permission) -> hasGranted(permission));
+    }
+
+    /**
+     * Check if a given list of permission were granted by the owner.
+     *
+     * @param permissions the name of permission.
+     * @return true if all given permissions are granted by the owner.
+     */
+    public List<String> nonGrantedPermissions(List<String> permissions) {
+        return permissions.stream().filter((permission) -> !hasGranted(permission)).collect(Collectors.toList());
     }
 
     /**
@@ -393,8 +431,10 @@ public class FBPermissions {
      * @param permission the name of the permission.
      * @return true if the given permission was granted by the owner.
      */
-    boolean hasGranted(String permission) {
+    public boolean hasGranted(String permission) {
 
         return permissions.getOrDefault(permission, NULL).isGranted();
     }
+
+
 }
