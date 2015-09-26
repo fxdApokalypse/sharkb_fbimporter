@@ -32,7 +32,7 @@ The Facebook importer comes with a [Gradle](https://gradle.org/) build script wh
 to build the importer. The build script can be executed by any major IDE which provides a [Gradle integration](https://gradle.org/why/integrates-with-everything/). If your are
 a NetBeans user then give [GradleSupport](http://plugins.netbeans.org/plugin/44510/gradle-support) a try.
 
-If your prefer the use of the command line then you could use gradle itself or the gradle wrapper (gradlw) which is shipped with the source code of the importer. In order to build & run the importer use the following commands: 
+If your prefer the use of the command line then you could use gradle itself or the gradle wrapper (gradlew) which is shipped with the source code of the importer. In order to run the importer use the following commands: 
     
     # Use this command when you have already installed gradle 2.4 >=
     gralde run
@@ -58,7 +58,7 @@ For more details how to use Gradle please visit the  [Gradle Getting Started Gui
 
 # How to use
 
-
+Work in Progress
 
 
 
