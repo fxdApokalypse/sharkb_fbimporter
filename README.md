@@ -22,7 +22,7 @@ into a Shark KnowledgeBase.
 
 ![API Structure](https://github.com/yveskaufmann/sharkb_fbimporter/blob/development/docu/images/fb_importer_structure.png "API Structure")
 
-# How to build
+# How to build ?
 
 In order to build the facebook importer you need a installed [Java SE Runtime Environment 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or alternatively
 a installed [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and optional 
@@ -32,11 +32,19 @@ The Facebook importer comes with a [Gradle](https://gradle.org/) build script wh
 to build the importer. The build script can be executed by any major IDE which provides a [Gradle integration](https://gradle.org/why/integrates-with-everything/). If your are
 a NetBeans user then give [GradleSupport](http://plugins.netbeans.org/plugin/44510/gradle-support) a try.
 
-## Build in a IDE
+If your prefer the use of the command line then you could use gradle itself or the gradle wrapper (gradlw) which is shipped with the source code of the importer. In order to build & run the importer use the following commands: 
+    
+    # Use this command when you have already installed gradle 2.4 >=
+    gralde run
+    
+    # Use this command when you don't have installed gradle 
+    ./gradlew run
+    # or for window users:
+    gradlew.bat run
+    
+For more details how to use Gradle please visit the  [Gradle Getting Started Guide](https://gradle.org/getting-started-gradle-java/).
 
-The major IDEs providing a Gradle integration by default or by plugin. is supported by the most major IDEs  
-
-## Grade Tasks
+## Gradle Tasks
 
 | Tasks        | Description                                                                         |  
 | ------------ |-------------------------------------------------------------------------------------| 
@@ -47,4 +55,11 @@ The major IDEs providing a Gradle integration by default or by plugin. is suppor
 | run          | Build and run the facebook importer.   |
 | eclipse      | Generates a eclipse ide project in order to open the source code in eclipse.      |
 | idea         | Generates a idea ide project in order to open the source code in idea.      |
+
+# How to use ?
+
+
+
+
+
 
