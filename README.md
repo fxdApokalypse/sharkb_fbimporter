@@ -22,7 +22,7 @@ into a Shark KnowledgeBase.
 
 ![API Structure](https://github.com/yveskaufmann/sharkb_fbimporter/blob/development/docu/images/fb_importer_structure.png "API Structure")
 
-# How to build ?
+# Build
 
 In order to build the facebook importer you need a installed [Java SE Runtime Environment 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or alternatively
 a installed [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and optional 
@@ -56,7 +56,7 @@ For more details how to use Gradle please visit the  [Gradle Getting Started Gui
 | eclipse      | Generates a eclipse ide project in order to open the source code in eclipse.      |
 | idea         | Generates a idea ide project in order to open the source code in idea.      |
 
-# How to use ?
+# How to use
 
 
 
