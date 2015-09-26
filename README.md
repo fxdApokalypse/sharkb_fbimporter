@@ -1,4 +1,4 @@
-FaebookImporter for Shark
+# FaebookImporter for Shark
 
 The FacebookImporter for Shark is an extension for the [Shark Framework](http://www.sharksystem.net/). It's enables developers to build Facebook importers for the [SharkKnowledgeBase](http://www.sharksystem.net/javadoc/current/) 
 by providing an API for building extendable Facebook importers which requests data from Facebook's  [GraphAPI](https://developers.facebook.com/docs/graph-api) and imports this data
