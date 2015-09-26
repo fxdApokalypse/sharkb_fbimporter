@@ -24,8 +24,14 @@ into a Shark KnowledgeBase.
 
 # How to build
 
+In order to build the facebook importer you need a installed [Java SE Runtime Environment 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or alternatively
+a installed [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and optional 
+a installed [Gradle](https://gradle.org/)>=2.4 but this only a recommendation the build script could be used without any gradle installation.  
+
 The Facebook importer comes with a [Gradle](https://gradle.org/) build script which is responsible
-to build the importer and provides the following tasks:
+to build the importer.      
+
+## Grade Tasks
 
 | Tasks        | Description                                                                         |  
 | ------------ |-------------------------------------------------------------------------------------| 
