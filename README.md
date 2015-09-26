@@ -29,16 +29,21 @@ a installed [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/j
 a installed [Gradle](https://gradle.org/)>=2.4 but this only a recommendation the build script could be used without any gradle installation.  
 
 The Facebook importer comes with a [Gradle](https://gradle.org/) build script which is responsible
-to build the importer.      
+to build the importer. The build script can be executed by any major IDE which provides a [Gradle integration](https://gradle.org/why/integrates-with-everything/). If your are
+a NetBeans user then give [GradleSupport](http://plugins.netbeans.org/plugin/44510/gradle-support) a try.
+
+## Build in a IDE
+
+The major IDEs providing a Gradle integration by default or by plugin. is supported by the most major IDEs  
 
 ## Grade Tasks
 
 | Tasks        | Description                                                                         |  
 | ------------ |-------------------------------------------------------------------------------------| 
 | build        | Builds the importer, creates javadoc and load all required dependencies from central maven repository |
-| dependencies | Load all required dependencies from central maven repository                        |
-| javadoc      | Generates the javadoc for the facebook importer                                    |
-| distZip      | Creates a distribution archive which contains the builded importer, created javadoc and os specific scripts for starting the facebook importer. When you only wanna use the example importer than this is choise. |
+| dependencies | Load all required dependencies from central maven repository.                        |
+| javadoc      | Generates the javadoc for the facebook importer.                                    |
+| distZip      | Creates a distribution archive which contains the builded importer, created javadoc and os specific scripts for starting the facebook importer. When you only wanna use the example importer than this is choise. The buileded archive could be found inside the build/distributions directory. |
 | run          | Build and run the facebook importer.   |
 | eclipse      | Generates a eclipse ide project in order to open the source code in eclipse.      |
 | idea         | Generates a idea ide project in order to open the source code in idea.      |
