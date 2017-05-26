@@ -56,9 +56,7 @@ For more details how to use Gradle please visit the  [Gradle Getting Started Gui
 | eclipse      | Generates a eclipse ide project in order to open the source code in eclipse.      |
 | idea         | Generates a idea ide project in order to open the source code in idea.      |
 
-# How to use
 
-Work in Progress
 
 
 
